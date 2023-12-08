@@ -1,25 +1,39 @@
 import {createBrowserRouter} from 'react-router-dom'
 import App from '../App';
-import Employees from '../pages/Employees/Employees';
-import Footer from '../components/Footer/Footer';
 import DashBoard from '../components/DashBoard/DashBoard';
+import Employees from '../pages/EmployeesPage/EmployeesPage';
+import Layout from '../components/Layout/Layout';
+import EmployeePage from '../pages/EmployeePage/EmployeePage';
+import PassportPage from '../pages/PassportPage/PassportPage';
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <Layout/>,
     children: [
       { 
-        path: "/employee", 
+        path: "employee", 
         element: <Employees/>
         
       },
       { 
-        path: "/employee/1", 
-        element: <DashBoard/>
-        
+        path: "/employee/:id", 
+        element: <DashBoard/>,
+        children: [
+          {
+            path: "employee-detail",
+            element: <EmployeePage/>
+          },
+          {
+            path: "passport/:id/passport-detail",
+            element: <PassportPage/>
+          }
+        ]
       },
+
+      
     ]
   },
+
   
 ]);

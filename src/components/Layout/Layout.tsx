@@ -1,7 +1,6 @@
 import React from 'react'
 import Navbar from '../Navbar/Navbar'
 import Footer from '../Footer/Footer'
-import Home from '../../pages/Employees/Employees'
 import { Outlet } from 'react-router'
 
 type Props = {}
@@ -11,7 +10,6 @@ const Layout = (props: Props) => {
     <div>
       <Navbar/>
       <Outlet/>
-      <Footer/>
     </div>
   )
 }
