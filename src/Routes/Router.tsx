@@ -1,10 +1,9 @@
 import {createBrowserRouter} from 'react-router-dom'
-import App from '../App';
-import DashBoard from '../components/DashBoard/DashBoard';
-import Employees from '../pages/EmployeesPage/EmployeesPage';
+import EmployeesPage from '../pages/EmployeesPage/EmployeesPage';
 import Layout from '../components/Layout/Layout';
 import EmployeePage from '../pages/EmployeePage/EmployeePage';
-import PassportPage from '../pages/PassportPage/PassportPage';
+import EmployeeProfile from '../components/EmployeeProfie/EmployeeProfile';
+import PassportProfile from '../components/PassportProfile/PassportProfile';
 
 export const router = createBrowserRouter([
   {
@@ -13,20 +12,19 @@ export const router = createBrowserRouter([
     children: [
       { 
         path: "employee", 
-        element: <Employees/>
-        
+        element: <EmployeesPage/>
       },
       { 
-        path: "/employee/:id", 
-        element: <DashBoard/>,
+        path: "/employee/:employeeId", 
+        element: <EmployeePage/>,
         children: [
           {
-            path: "employee-detail",
-            element: <EmployeePage/>
+            path: "",
+            element: <EmployeeProfile/>
           },
           {
-            path: "passport/:id/passport-detail",
-            element: <PassportPage/>
+            path: "passport/:passportId",
+            element: <PassportProfile/>
           }
         ]
       },

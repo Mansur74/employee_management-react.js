@@ -13,7 +13,7 @@ const Navbar = (props: Props) => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/employee">Employee</a>
+              <a className="nav-link active" aria-current="page" href="/employee">Employees</a>
             </li>
 
             <li className="nav-item dropdown">
@@ -21,9 +21,7 @@ const Navbar = (props: Props) => {
                 Others
               </a>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                <li><a className="dropdown-item" href="#">Create Employee</a></li>
               </ul>
             </li>
           </ul>
