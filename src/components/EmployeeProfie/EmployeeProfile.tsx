@@ -12,11 +12,13 @@ type Props = {}
 const EmployeeProfile = (props: Props) => {
   const {employeeId} = useParams();
   const [employee, setEmployee] = useState<Employee>();
+  const [date, setDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const getEmployee = async () => {
       const result = await getEmployeeById(employeeId!);
       setEmployee(result?.data); 
+      setDate(new Date(result?.data.hiringDate!));
     }
     getEmployee();
   }, []);
@@ -26,15 +28,15 @@ const EmployeeProfile = (props: Props) => {
         <div className="col-md-5">
           <div className="project-info-box mt-0">
             <h5>{employee?.firstName} {employee?.lastName}</h5>
-            <p className="mb-0">Vivamus pellentesque, felis in aliquam ullamcorper, lorem tortor porttitor erat, hendrerit porta nunc tellus eu lectus. Ut vel imperdiet est. Pellentesque condimentum, dui et blandit laoreet, quam nisi tincidunt tortor.</p>
+            <p className="mb-0">{employee?.description}</p>
           </div>
 
           <div className="project-info-box">
-            <p><b>Client:</b> CUPCAKE CO</p>
-            <p><b>Date:</b> 14.02.2020</p>
-            <p><b>Designer:</b> James Doe</p>
-            <p><b>Tools:</b> Illustrator</p>
-            <p className="mb-0"><b>Budget:</b> $500</p>
+            <p><b>Age</b> {employee?.age} </p>
+            <p><b>Hiring Date:</b> {date?.toLocaleDateString()}</p>
+            <p><b>Department:</b> {employee?.department}</p>
+            <p><b>Gender:</b> Gender</p>
+            <p className="mb-0"><b>Salary:</b> {employee?.salary}₺</p>
           </div>
 
           <div className="project-info-box mt-0 mb-0">
@@ -49,11 +51,8 @@ const EmployeeProfile = (props: Props) => {
         </div>
 
         <div className="col-md-7">
-          <img src="https://www.bootdey.com/image/400x300/FFB6C1/000000" alt="project-image" className="rounded" id='profileImg' />
-          <div className="project-info-box">
-            <p><b>Categories:</b> Design, Illustration</p>
-            <p><b>Skills:</b> Illustrator</p>
-          </div>
+          <img src={employee?.imgURL} className="" height="434px" alt="..."/>
+ 
         </div>
       </div>
     </div>

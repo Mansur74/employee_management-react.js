@@ -42,7 +42,7 @@ const DashBoard = (props: Props) => {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to={`passport/${employee?.passport.id}`}>
+                <Link className="nav-link" to={`passport/${employee?.passport?.id}`}>
                   <FontAwesomeIcon icon={faPassport} /> Passport
                 </Link>
               </li>

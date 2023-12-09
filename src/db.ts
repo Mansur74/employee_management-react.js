@@ -3,7 +3,12 @@ export interface Employee {
   firstName: string,
   lastName: string,
   age: number,
-  passport: Passport
+  hiringDate: string,
+  department: string,
+  salary: number
+  description: string,
+  imgURL: string,
+  passport: Passport | null,
 
 }
 
