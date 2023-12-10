@@ -18,7 +18,7 @@ const EmployeeCard = ({employee}: Props) => {
               <Link to={`${employee.id}`} className='btn btn-sm btn-outline-secondary'>
                 View
               </Link>
-              <Link to="" className='btn btn-sm btn-outline-secondary'>
+              <Link to={`${employee.id}/employee-edit`} className='btn btn-sm btn-outline-secondary'>
                 Edit
               </Link>
             </div>

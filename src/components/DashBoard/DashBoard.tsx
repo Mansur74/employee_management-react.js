@@ -3,6 +3,7 @@ import './DashBoard.css'
 import { Outlet, useParams } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserTie, faPassport } from '@fortawesome/free-solid-svg-icons';
+import { FaUserEdit, FaEdit } from 'react-icons/fa';
 import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 import { Employee } from '../../db';
@@ -57,16 +58,14 @@ const DashBoard = (props: Props) => {
             </h6>
             <ul className="nav flex-column mb-2">
               <li className="nav-item">
-                <a className="nav-link" href="#">
-                  <span data-feather="file-text" className="align-text-bottom"></span>
-                  Update Employee
-                </a>
+                <Link className="nav-link" to="employee-edit">
+                  <FaUserEdit/> Edit Employee
+                </Link>
               </li>
 
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  <span data-feather="file-text" className="align-text-bottom"></span>
-                  Update Passport
+                  <FaEdit/> Edit Passport
                 </a>
               </li>
 

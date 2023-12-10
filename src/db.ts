@@ -1,14 +1,14 @@
 export interface Employee {
-  id: number,
-  firstName: string,
-  lastName: string,
-  age: number,
-  hiringDate: string,
-  department: string,
-  salary: number
-  description: string,
-  imgURL: string,
-  passport: Passport | null,
+  id?: number,
+  firstName?: string,
+  lastName?: string,
+  age?: number,
+  hiringDate?: string,
+  department?: string,
+  salary?: number
+  description?: string,
+  imgURL?: string,
+  passport?: Passport | null,
 
 }
 
