@@ -69,11 +69,17 @@ const DashBoard = (props: Props) => {
                 </a>
               </li>
 
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  <FaEdit/> Create New Passport
+                </a>
+              </li>
+
             </ul>
           </div>
         </nav>
 
-        <div className="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-light mt-5 pt-3">
+        <div className="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-light">
           <Outlet />
           <Footer />
         </div>

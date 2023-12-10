@@ -28,9 +28,31 @@ export const getEmployeeById = async (id: string) => {
 
 }
 
+export const createEmployee = async (employee: Employee) => {
+  try {
+    const data = await axios.post<Employee>(`http://localhost:3005/api/employee`, employee);
+    return data;
+  }
+  catch (error: any) {
+    console.log(error)
+  }
+
+}
+
 export const updateEmployeeById = async (id: string, employee: Employee) => {
   try {
     const data = await axios.patch<Employee>(`http://localhost:3005/api/employee/${id}`, employee);
+    return data;
+  }
+  catch (error: any) {
+    console.log(error)
+  }
+
+}
+
+export const deleteEmployeeById = async (id: string) => {
+  try {
+    const data = await axios.delete<Employee>(`http://localhost:3005/api/employee/${id}`);
     return data;
   }
   catch (error: any) {

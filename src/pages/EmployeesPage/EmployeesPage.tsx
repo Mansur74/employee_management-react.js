@@ -26,7 +26,7 @@ const EmployeesPage = (props: Props) => {
   return (
     <div className="container">
 
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-5 pt-3">
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {
           employees.length > 0 ? (
             employees.map((employee) => {

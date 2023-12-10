@@ -5,6 +5,7 @@ import EmployeePage from '../pages/EmployeePage/EmployeePage';
 import EmployeeProfile from '../components/EmployeeProfie/EmployeeProfile';
 import PassportProfile from '../components/PassportProfile/PassportProfile';
 import EmployeeEdit from '../components/EmployeeEdit/EmployeeEdit';
+import CreateEmployeePage from '../pages/CreateEmployeePage/CreateEmployeePage';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
             element: <EmployeeEdit/>
           }
         ]
+      },
+      { 
+        path: "employee/create", 
+        element: <CreateEmployeePage/>
       },
 
       

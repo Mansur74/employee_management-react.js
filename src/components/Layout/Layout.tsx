@@ -9,7 +9,9 @@ const Layout = (props: Props) => {
   return (
     <div>
       <Navbar/>
-      <Outlet/>
+      <div className='mt-5 pt-4 bg-light'>
+       <Outlet/>
+      </div>
     </div>
   )
 }

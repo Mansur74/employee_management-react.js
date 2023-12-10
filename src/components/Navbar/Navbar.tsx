@@ -21,7 +21,7 @@ const Navbar = (props: Props) => {
                 Others
               </a>
               <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Create Employee</a></li>
+                <li><a className="dropdown-item" href="/employee/create">Create Employee</a></li>
               </ul>
             </li>
           </ul>
