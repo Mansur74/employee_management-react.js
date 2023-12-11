@@ -45,9 +45,9 @@ const PassportProfile = (props: Props) => {
             <h4 className='card-text'>Valid Countries</h4>
             <div className='row row-cols-1 row-cols-md-3 g-4'>
               {
-                passport?.countries.map((country) => {
+                passport.countries!.map((country) => {
                   return (
-                    <CountryCard country={country} />
+                    <CountryCard key={country.id} country={country} />
                   )
                 })
               }

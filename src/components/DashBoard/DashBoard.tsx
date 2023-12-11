@@ -7,7 +7,6 @@ import { FaUserEdit, FaEdit } from 'react-icons/fa';
 import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 import { Employee } from '../../db';
-import { getPassportById } from '../../services/PassportService';
 import { getEmployeeById } from '../../services/EmployeeService';
 
 interface Props {
@@ -43,7 +42,7 @@ const DashBoard = (props: Props) => {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to={`passport/${employee?.passport?.id}`}>
+                <Link className="nav-link" to={employee?.passport ? `passport/${employee?.passport?.id}` : "passport"}>
                   <FontAwesomeIcon icon={faPassport} /> Passport
                 </Link>
               </li>
@@ -59,20 +58,15 @@ const DashBoard = (props: Props) => {
             <ul className="nav flex-column mb-2">
               <li className="nav-item">
                 <Link className="nav-link" to="employee-edit">
-                  <FaUserEdit/> Edit Employee
+                  <FaUserEdit /> Edit Employee
                 </Link>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">
-                  <FaEdit/> Edit Passport
-                </a>
-              </li>
+                <Link className="nav-link" to={employee?.passport ? `passport/${employee?.passport?.id}/passport-edit` : "passport"}>
+                  <FaEdit /> Edit Passport
+                </Link>
 
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  <FaEdit/> Create New Passport
-                </a>
               </li>
 
             </ul>

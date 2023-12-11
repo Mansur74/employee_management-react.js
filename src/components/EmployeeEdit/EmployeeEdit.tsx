@@ -9,7 +9,7 @@ type Props = {}
 const EmployeeEdit = (props: Props) => {
   const navigate = useNavigate();
   const { employeeId } = useParams();
-  const [employee, setEmployee] = useState<Employee>({});
+  const [employee, setEmployee] = useState<Employee>();
 
   useEffect(() => {
     const getEmployee = async () => {

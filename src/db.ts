@@ -13,16 +13,16 @@ export interface Employee {
 }
 
 export interface Passport {
-  id: number,
-  passportNumber: string,
-  validDate: string,
-  countries: Country[]
+  id?: number,
+  passportNumber?: number,
+  validDate?: string,
+  countries?: Country[]
 }
 
 export interface Country {
-  id: number,
-  countryName: string,
-  capitalCity: string,
-  population: number,
-  imgURL: string
+  id?: number,
+  countryName?: string,
+  capitalCity?: string,
+  population?: number,
+  imgURL?: string
 }

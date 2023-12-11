@@ -6,6 +6,8 @@ import EmployeeProfile from '../components/EmployeeProfie/EmployeeProfile';
 import PassportProfile from '../components/PassportProfile/PassportProfile';
 import EmployeeEdit from '../components/EmployeeEdit/EmployeeEdit';
 import CreateEmployeePage from '../pages/CreateEmployeePage/CreateEmployeePage';
+import PassportCreate from '../components/PassportCreate/PassportCreate';
+import PassportEdit from '../components/PassportEdit/PassportEdit';
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +33,15 @@ export const router = createBrowserRouter([
           {
             path: "employee-edit",
             element: <EmployeeEdit/>
+          },
+
+          {
+            path: "passport",
+            element: <PassportCreate/>
+          },
+          {
+            path: "passport/:passportId/passport-edit",
+            element: <PassportEdit/>
           }
         ]
       },

@@ -30,7 +30,7 @@ const EmployeesPage = (props: Props) => {
         {
           employees.length > 0 ? (
             employees.map((employee) => {
-              return <EmployeeCard employee={employee} />
+              return <EmployeeCard key={employee.id} employee={employee} />
             })
           ) : ("Empty")
         }
