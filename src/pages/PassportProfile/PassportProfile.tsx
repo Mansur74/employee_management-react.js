@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { Passport } from '../../db';
 import { getPassportById } from '../../services/PassportService';
-import CountryCard from '../Cards/CountryCard/CountryCard';
+import CountryCard from '../../components/Cards/CountryCard/CountryCard';
 
 type Props = {}
 

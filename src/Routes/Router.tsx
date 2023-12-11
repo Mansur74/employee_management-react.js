@@ -1,13 +1,13 @@
 import {createBrowserRouter} from 'react-router-dom'
 import EmployeesPage from '../pages/EmployeesPage/EmployeesPage';
 import Layout from '../components/Layout/Layout';
-import EmployeePage from '../pages/EmployeePage/EmployeePage';
-import EmployeeProfile from '../components/EmployeeProfie/EmployeeProfile';
-import PassportProfile from '../components/PassportProfile/PassportProfile';
-import EmployeeEdit from '../components/EmployeeEdit/EmployeeEdit';
-import CreateEmployeePage from '../pages/CreateEmployeePage/CreateEmployeePage';
-import PassportCreate from '../components/PassportCreate/PassportCreate';
-import PassportEdit from '../components/PassportEdit/PassportEdit';
+import EmployeeProfile from '../pages/EmployeeProfie/EmployeeProfile';
+import PassportProfile from '../pages/PassportProfile/PassportProfile';
+import EmployeeEdit from '../pages/EmployeeEdit/EmployeeEdit';
+import EmployeeCreate from '../pages/EmployeeCreate/EmployeeCreate';
+import PassportCreate from '../pages/PassportCreate/PassportCreate';
+import PassportEdit from '../pages/PassportEdit/PassportEdit';
+import DashBoard from '../components/DashBoard/DashBoard';
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
       },
       { 
         path: "/employee/:employeeId", 
-        element: <EmployeePage/>,
+        element: <DashBoard/>,
         children: [
           {
             path: "",
@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
       },
       { 
         path: "employee/create", 
-        element: <CreateEmployeePage/>
+        element: <EmployeeCreate/>
       },
 
       

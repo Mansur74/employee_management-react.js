@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { deleteEmployeeById, getAllEmployees, getEmployeeById } from '../../services/EmployeeService';
 import { Employee } from '../../db';
-import Footer from '../Footer/Footer';
-import EmployeeCard from '../Cards/EmployeeCard/EmployeeCard';
+import Footer from '../../components/Footer/Footer';
+import EmployeeCard from '../../components/Cards/EmployeeCard/EmployeeCard';
 import { FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa';
 import './EmployeeProfile.css'
 import { useParams } from 'react-router';
