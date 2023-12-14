@@ -9,6 +9,7 @@ import PassportCreate from '../pages/PassportCreate/PassportCreate';
 import PassportEdit from '../pages/PassportEdit/PassportEdit';
 import DashBoard from '../components/DashBoard/DashBoard';
 import CountriesPage from '../pages/CountriesPage/CountriesPage';
+import SignInPage from '../pages/SignInPage/SignInPage';
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       { 
         path: "countries", 
         element: <CountriesPage/>
+      },
+      { 
+        path: "sign-in", 
+        element: <SignInPage/>
       },
       
     ]

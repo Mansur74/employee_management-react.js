@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { User } from '../../db';
 
-type Props = {}
+interface Props {
+ user: User,
+ handleSignOut: () => void
+}
+const Navbar = ({user, handleSignOut}: Props) => {
 
-const Navbar = (props: Props) => {
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
       <div className="container-fluid">
@@ -26,6 +31,22 @@ const Navbar = (props: Props) => {
                 <Link className="dropdown-item" to="/countries">Countries</Link>
               </ul>
             </li>
+
+            {
+              user ?
+                <li className="nav-item">
+                  <input type='button' value="Sign Out" onClick={handleSignOut} className="nav-link active" />
+                </li> :
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link active" to="/sign-in">Sign In</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link active" to="/sign-up">Sign Up</Link>
+                  </li>
+                </>
+            }
+
           </ul>
         </div>
       </div>

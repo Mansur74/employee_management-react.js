@@ -26,3 +26,13 @@ export interface Country {
   population?: number,
   imgURL?: string
 }
+
+export interface User {
+  id?: number,
+  firstName?: string,
+  lastName?: string,
+  userName?: number,
+  email?: string,
+  password?: string,
+  accessToken?: string
+}
