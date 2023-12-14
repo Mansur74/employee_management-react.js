@@ -13,31 +13,42 @@ const EmployeesPage = (props: Props) => {
   useEffect(() => {
     const getEmployees = async () => {
       const result = await getAllEmployees();
-      if(typeof result === "string" )
+      if (typeof result === "string")
         setServerError(result);
-      else if(Array.isArray(result.data))
+      else if (Array.isArray(result.data))
         setEmployees(result.data);
-      
+
     }
     getEmployees()
   }, []);
 
 
   return (
-    <div className="container">
-
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {
-          employees.length > 0 ? (
-            employees.map((employee) => {
-              return <EmployeeCard key={employee.id} employee={employee} />
-            })
-          ) : ("Empty")
-        }
-      
+    <>
+      <div className="mb-5">
+        <div className="p-5 text-center bg-dark bg-gradient">
+          <div className="container py-5">
+            <h1 className="text-white">Employees</h1>
+            <p className="col-lg-8 mx-auto lead">
+              This takes the basic jumbotron above and makes its background edge-to-edge with a <code>.container</code> inside to align content. Similar to above, it's been recreated with built-in grid and utility classes.
+            </p>
+          </div>
+        </div>
       </div>
-      <Footer/>
-    </div>
+      <div className="container">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {
+            employees.length > 0 ? (
+              employees.map((employee) => {
+                return <EmployeeCard key={employee.id} employee={employee} />
+              })
+            ) : ("Empty")
+          }
+
+        </div>
+        <Footer />
+      </div>
+    </>
   )
 }
 

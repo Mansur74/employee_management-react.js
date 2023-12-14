@@ -8,6 +8,7 @@ import EmployeeCreate from '../pages/EmployeeCreate/EmployeeCreate';
 import PassportCreate from '../pages/PassportCreate/PassportCreate';
 import PassportEdit from '../pages/PassportEdit/PassportEdit';
 import DashBoard from '../components/DashBoard/DashBoard';
+import CountriesPage from '../pages/CountriesPage/CountriesPage';
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +50,10 @@ export const router = createBrowserRouter([
         path: "employee/create", 
         element: <EmployeeCreate/>
       },
-
+      { 
+        path: "countries", 
+        element: <CountriesPage/>
+      },
       
     ]
   },
