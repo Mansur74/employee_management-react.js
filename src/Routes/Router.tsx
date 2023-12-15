@@ -35,13 +35,12 @@ export const router = createBrowserRouter([
             element: <PassportProfile/>
           },
           {
-            path: "employee/:employeeId/employee-edit",
-            element: <EmployeeEdit/>
-          },
-
-          {
             path: "passport",
             element: <PassportCreate/>
+          },
+          {
+            path: "employee/:employeeId/employee-edit",
+            element: <EmployeeEdit/>
           },
           {
             path: "passport/:passportId/passport-edit",

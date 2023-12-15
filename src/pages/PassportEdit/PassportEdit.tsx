@@ -8,7 +8,7 @@ type Props = {}
 
 const PassportEdit = (props: Props) => {
   const navigate = useNavigate();
-  const {employeeId, passportId} = useParams();
+  const {passportId} = useParams();
   const [serverError, setServerError] = useState<string | null>(null);
   const [countries, setCountries] = useState<Country[]>([]);
   const [passport, setPassport] = useState<Passport>();
@@ -35,14 +35,14 @@ const PassportEdit = (props: Props) => {
     });
 
     const passport : any = {
-      id: employeeId,
+      id: passportId,
       passportNumber: parseInt(data.get("passportNumber") as string) as number,
       validDate: data.get("validDate") as string,
       countries: countryIds
     }
 
     await updatePassportById(passportId!, passport);
-    navigate(`/employee/${employeeId}/passport/${passport.id}`);
+    navigate(`/passport/${passport.id}`);
     
   }
 

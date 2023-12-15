@@ -45,7 +45,8 @@ const PassportCreate = (props: Props) => {
     !isCreate ? 
     <div className='container'>
       <p>Passport does not exist.</p>
-      <input type="button" value="Create Passport" onClick={() => setIsCreate(true)} className="btn btn-secondary"/></div> :
+      <input type="button" value="Create Passport" onClick={() => setIsCreate(true)} className="btn btn-secondary"/>
+    </div> :
     <div className='container ps-5 pe-5'>
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
