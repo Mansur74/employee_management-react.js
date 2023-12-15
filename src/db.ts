@@ -31,7 +31,7 @@ export interface User {
   id?: number,
   firstName?: string,
   lastName?: string,
-  userName?: number,
+  userName?: string,
   email?: string,
   password?: string,
   accessToken?: string

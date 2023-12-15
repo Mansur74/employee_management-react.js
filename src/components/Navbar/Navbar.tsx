@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { User } from '../../db';
 
 interface Props {
- user: User,
- handleSignOut: () => void
+  user: User,
+  handleSignOut: () => void
 }
-const Navbar = ({user, handleSignOut}: Props) => {
+const Navbar = ({ user, handleSignOut }: Props) => {
 
 
   return (
@@ -32,22 +32,28 @@ const Navbar = ({user, handleSignOut}: Props) => {
               </ul>
             </li>
 
-            {
-              user ?
+          </ul>
+
+          {
+            user ?
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/user">Profile</Link>
+                </li>
                 <li className="nav-item">
                   <input type='button' value="Sign Out" onClick={handleSignOut} className="nav-link active" />
-                </li> :
-                <>
-                  <li className="nav-item">
-                    <Link className="nav-link active" to="/sign-in">Sign In</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link active" to="/sign-up">Sign Up</Link>
-                  </li>
-                </>
-            }
+                </li>
+              </ul> :
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/sign-in">Sign In</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/sign-up">Sign Up</Link>
+                </li>
+              </ul>
+          }
 
-          </ul>
         </div>
       </div>
     </nav>

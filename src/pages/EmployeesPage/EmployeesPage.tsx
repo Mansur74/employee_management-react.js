@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import EmployeeCard from '../../components/Cards/EmployeeCard/EmployeeCard'
 import Footer from '../../components/Footer/Footer'
 import { getAllEmployees } from '../../services/EmployeeService'
-import { Employee } from "../../db"
+import { Employee, User } from "../../db"
 
 type Props = {}
 
 const EmployeesPage = (props: Props) => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [serverError, setServerError] = useState<String | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const getEmployees = async () => {
+      const user: User = JSON.parse( await localStorage.getItem("user")!);
+      setUser(user);
       const result = await getAllEmployees();
       if (typeof result === "string")
         setServerError(result);
@@ -19,11 +22,13 @@ const EmployeesPage = (props: Props) => {
         setEmployees(result.data);
 
     }
+    
     getEmployees()
   }, []);
 
 
   return (
+    user ?
     <>
       <div className="mb-5">
         <div className="p-5 text-center bg-dark bg-gradient">
@@ -48,7 +53,8 @@ const EmployeesPage = (props: Props) => {
         </div>
         <Footer />
       </div>
-    </>
+    </> : 
+    <>"user yooook"</>
   )
 }
 

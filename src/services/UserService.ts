@@ -1,7 +1,7 @@
 import axios from "axios"
 import { User } from "../db";
 
-export const signUp = (user: User) => {
+export const signUp = (user: any) => {
   try {
     const result = axios.post<string>("http://localhost:3005/api/user/sign-up", user);
     return result;

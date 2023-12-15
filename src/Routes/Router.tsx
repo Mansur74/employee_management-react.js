@@ -10,6 +10,7 @@ import PassportEdit from '../pages/PassportEdit/PassportEdit';
 import DashBoard from '../components/DashBoard/DashBoard';
 import CountriesPage from '../pages/CountriesPage/CountriesPage';
 import SignInPage from '../pages/SignInPage/SignInPage';
+import SignUpPage from '../pages/SignUpPage/SignUpPage';
 
 export const router = createBrowserRouter([
   {
@@ -20,12 +21,13 @@ export const router = createBrowserRouter([
         path: "employee", 
         element: <EmployeesPage/>
       },
+
       { 
-        path: "/employee/:employeeId", 
+        path: "", 
         element: <DashBoard/>,
         children: [
           {
-            path: "",
+            path: "employee/:employeeId",
             element: <EmployeeProfile/>
           },
           {
@@ -33,7 +35,7 @@ export const router = createBrowserRouter([
             element: <PassportProfile/>
           },
           {
-            path: "employee-edit",
+            path: "employee/:employeeId/employee-edit",
             element: <EmployeeEdit/>
           },
 
@@ -58,6 +60,10 @@ export const router = createBrowserRouter([
       { 
         path: "sign-in", 
         element: <SignInPage/>
+      },
+      { 
+        path: "sign-up", 
+        element: <SignUpPage/>
       },
       
     ]

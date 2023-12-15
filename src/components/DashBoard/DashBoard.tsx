@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './DashBoard.css'
 import { Outlet, useParams } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -36,7 +36,7 @@ const DashBoard = (props: Props) => {
               </h6>
 
               <li className="nav-item">
-                <Link className="nav-link" to="">
+                <Link className="nav-link" to={`employee/${employee?.id}`}>
                   <FontAwesomeIcon icon={faUserTie} /> Employee
                 </Link>
               </li>
@@ -57,7 +57,7 @@ const DashBoard = (props: Props) => {
             </h6>
             <ul className="nav flex-column mb-2">
               <li className="nav-item">
-                <Link className="nav-link" to="employee-edit">
+                <Link className="nav-link" to={`employee/${employee?.id}/employee-edit`}>
                   <FaUserEdit /> Edit Employee
                 </Link>
               </li>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { Passport } from '../../db';
 import { getPassportById } from '../../services/PassportService';
@@ -13,12 +13,12 @@ const PassportProfile = (props: Props) => {
   const [date, setDate] = useState<Date | null>(null);
 
   useEffect(() => {
-    const getEmployee = async () => {
+    const getPassport = async () => {
       const result = await getPassportById(passportId!);
       setPassport(result?.data);
       setDate(new Date(result?.data.validDate!));
     }
-    getEmployee();
+    getPassport();
   }, []);
 
   return (
