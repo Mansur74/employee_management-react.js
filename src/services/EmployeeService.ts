@@ -3,7 +3,7 @@ import { Employee } from "../db"
 
 export const getAllEmployees = async () => {
   try {
-    const data = await axios.get<Employee[]>("http://localhost:3005/api/employee");
+    const data = await axios.get<Employee[]>("http://localhost:8080/api/employee");
     return data;
   }
   catch (error) {
@@ -19,7 +19,7 @@ export const getAllEmployees = async () => {
 
 export const getEmployeeById = async (id: string) => {
   try {
-    const data = await axios.get<Employee>(`http://localhost:3005/api/employee/${id}`);
+    const data = await axios.get<Employee>(`http://localhost:8080/api/employee/${id}`);
     return data;
   }
   catch (error: any) {
@@ -30,7 +30,7 @@ export const getEmployeeById = async (id: string) => {
 
 export const createEmployee = async (employee: Employee) => {
   try {
-    const data = await axios.post<Employee>(`http://localhost:3005/api/employee`, employee);
+    const data = await axios.post<Employee>(`http://localhost:8080/api/employee`, employee);
     return data;
   }
   catch (error: any) {
@@ -41,7 +41,7 @@ export const createEmployee = async (employee: Employee) => {
 
 export const updateEmployeeById = async (id: string, employee: Employee) => {
   try {
-    const data = await axios.patch<Employee>(`http://localhost:3005/api/employee/${id}`, employee);
+    const data = await axios.patch<Employee>(`http://localhost:8080/api/employee/${id}`, employee);
     return data;
   }
   catch (error: any) {
@@ -52,7 +52,7 @@ export const updateEmployeeById = async (id: string, employee: Employee) => {
 
 export const deleteEmployeeById = async (id: string) => {
   try {
-    const data = await axios.delete<Employee>(`http://localhost:3005/api/employee/${id}`);
+    const data = await axios.delete<Employee>(`http://localhost:8080/api/employee/${id}`);
     return data;
   }
   catch (error: any) {

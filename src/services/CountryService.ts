@@ -3,7 +3,7 @@ import { Country } from "../db";
 
 export const getAllCountries = async () => {
   try {
-    const result = axios.get<Country[]>("http://localhost:3005/api/country");
+    const result = axios.get<Country[]>("http://localhost:8080/api/country");
     return result;
   } 
   catch (error) {

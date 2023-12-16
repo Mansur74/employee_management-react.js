@@ -3,7 +3,7 @@ import { Passport } from "../db";
 
 export const getPassportById = async (id: string) => {
   try {
-    const data = await axios.get<Passport>(`http://localhost:3005/api/passport/${id}`);
+    const data = await axios.get<Passport>(`http://localhost:8080/api/passport/${id}`);
     return data;
   } 
   catch (error: any) {
@@ -14,7 +14,7 @@ export const getPassportById = async (id: string) => {
 
  export const createPassport = async (employeeId: string, body: any) => {
   try {
-    const data = await axios.post(`http://localhost:3005/api/passport/${employeeId}`, body);
+    const data = await axios.post(`http://localhost:8080/api/passport/${employeeId}`, body);
     return data;
   } 
   catch (error: any) {
@@ -24,7 +24,7 @@ export const getPassportById = async (id: string) => {
 
  export const updatePassportById = async (passportId: string, body: any) => {
   try {
-    const data = await axios.patch(`http://localhost:3005/api/passport/${passportId}`, body);
+    const data = await axios.patch(`http://localhost:8080/api/passport/${passportId}`, body);
     return data;
   } 
   catch (error: any) {
