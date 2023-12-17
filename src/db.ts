@@ -36,3 +36,8 @@ export interface User {
   password?: string,
   accessToken?: string
 }
+
+export interface EmployeePage {
+  count: number,
+  rows: Employee[]
+}

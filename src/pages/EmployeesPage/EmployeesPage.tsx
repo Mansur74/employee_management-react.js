@@ -12,6 +12,9 @@ const EmployeesPage = (props: Props) => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [serverError, setServerError] = useState<String | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [page, setPage] = useState<number>(0);
+  const [size, setSize] = useState<number>(1);
+  const [totalSize, setTotalSize] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,17 +24,32 @@ const EmployeesPage = (props: Props) => {
       console.log(user);
 
       if (user) {
-        const result = await getAllEmployees();
+        const result = await getAllEmployees(page, size);
         if (typeof result === "string")
           setServerError(result);
-        else if (Array.isArray(result.data))
-          setEmployees(result.data);
+        else if (Array.isArray(result.data.rows)) {
+          setEmployees(result.data.rows);
+          setTotalSize(result.data.count);
+        }
+
       }
       else
         navigate("/sign-in");
     }
     getEmployees();
   }, []);
+
+  const handlePage = async (e: React.MouseEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const page = parseInt(target.value)-1;
+    const result = await getAllEmployees(page, size);
+    if (typeof result === "string")
+      setServerError(result);
+    else if (Array.isArray(result.data.rows)) {
+      setEmployees(result.data.rows);
+      setTotalSize(result.data.count);
+    }
+  }
 
 
   return (
@@ -48,7 +66,7 @@ const EmployeesPage = (props: Props) => {
           </div>
         </div>
         <div className="container">
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3">
             {
               employees.length > 0 ? (
                 employees.map((employee) => {
@@ -58,6 +76,23 @@ const EmployeesPage = (props: Props) => {
             }
 
           </div>
+          <nav aria-label="Page navigation example">
+            <ul className="pagination">
+              <li className="page-item">
+                <a className="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              {Array.from({ length: totalSize }, (_, index) => (
+                <li key={index} className="page-item"><input type='button' onClick={handlePage} value={index + 1} className="page-link" /></li>
+              ))}
+              <li className="page-item">
+                <a className="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
           <Footer />
         </div>
       </> :

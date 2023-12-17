@@ -5,3 +5,8 @@ services:
     container_name: react
     ports:
       - 3000:3000
+    volumes:
+      - "./src:/app/src"
+      - "/app/node_modules"
+    environment:
+      WATCHPACK_POLLING: "true"

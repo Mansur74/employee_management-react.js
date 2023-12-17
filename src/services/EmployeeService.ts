@@ -1,9 +1,9 @@
 import axios from "axios"
-import { Employee } from "../db"
+import { Employee, EmployeePage } from "../db"
 
-export const getAllEmployees = async () => {
+export const getAllEmployees = async (page: number, size: number) => {
   try {
-    const data = await axios.get<Employee[]>("http://localhost:8080/api/employee");
+    const data = await axios.get<EmployeePage>(`http://localhost:8080/api/employee?page=${page}&&size=${size}`);
     return data;
   }
   catch (error) {
