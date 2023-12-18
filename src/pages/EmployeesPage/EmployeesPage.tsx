@@ -3,54 +3,76 @@ import EmployeeCard from '../../components/Cards/EmployeeCard/EmployeeCard'
 import Footer from '../../components/Footer/Footer'
 import { getAllEmployees } from '../../services/EmployeeService'
 import { Employee, User } from "../../db"
-import { useNavigate } from 'react-router'
-import Spinner from '../../components/Spinner/Spinner'
+import { useLocation, useNavigate } from 'react-router'
+import GlobalSpinner from '../../components/Spinner/GlobalSpinner/GlobalSpinner'
+import { Link } from 'react-router-dom'
 
 type Props = {}
 
 const EmployeesPage = (props: Props) => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const navigate = useNavigate();
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [serverError, setServerError] = useState<String | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [page, setPage] = useState<number>(0);
-  const [size, setSize] = useState<number>(1);
   const [totalSize, setTotalSize] = useState<number>(0);
-  const navigate = useNavigate();
+  const [page, setPage] = useState<number>(parseInt(params.get("page")!));
+  const [size, setSize] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const getEmployees = async () => {
+    setIsLoading(true);
+    const user: User = JSON.parse(await localStorage.getItem("user")!);
+    setUser(user);
+
+    if (user) {
+      const result = await getAllEmployees(page, size);
+      if (typeof result === "string")
+        setServerError(result);
+      else if (Array.isArray(result.data.rows)) {
+        setEmployees(result.data.rows);
+        setTotalSize(result.data.count);
+      }
+      setIsLoading(false);
+
+    }
+    else
+      navigate("/sign-in");
+  }
 
   useEffect(() => {
-    const getEmployees = async () => {
-      const user: User = JSON.parse(await localStorage.getItem("user")!);
-      setUser(user);
-      console.log(user);
-
-      if (user) {
-        const result = await getAllEmployees(page, size);
-        if (typeof result === "string")
-          setServerError(result);
-        else if (Array.isArray(result.data.rows)) {
-          setEmployees(result.data.rows);
-          setTotalSize(result.data.count);
-        }
-
-      }
-      else
-        navigate("/sign-in");
-    }
     getEmployees();
   }, []);
 
+  useEffect(() => {
+    navigate(`/employee?page=${page}`)
+    getEmployees();
+  }, [page]);
+
   const handlePage = async (e: React.MouseEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
-    const page = parseInt(target.value)-1;
-    const result = await getAllEmployees(page, size);
-    if (typeof result === "string")
-      setServerError(result);
-    else if (Array.isArray(result.data.rows)) {
-      setEmployees(result.data.rows);
-      setTotalSize(result.data.count);
-    }
+    const page = parseInt(target.value) - 1;
+    setPage(page);
   }
 
+  const handlePreviousPage = async (e: React.MouseEvent<HTMLInputElement>) => {
+    if (page > 0) {
+      const previousPage = page - 1;
+      setPage(previousPage)
+    }
+    else
+      return;
+  }
+
+  const handleNextPage = async (e: React.MouseEvent<HTMLInputElement>) => {
+    if (page < totalSize - 1) {
+      const nextPage = page + 1;
+      setPage(nextPage)
+    }
+    else
+      return
+  }
 
   return (
     user ?
@@ -66,30 +88,30 @@ const EmployeesPage = (props: Props) => {
           </div>
         </div>
         <div className="container">
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3">
-            {
-              employees.length > 0 ? (
-                employees.map((employee) => {
-                  return <EmployeeCard key={employee.id} employee={employee} />
-                })
-              ) : ("Empty")
-            }
+          {
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3">
+              {
+                employees.length > 0 ? (
+                  employees.map((employee) => {
+                    return <EmployeeCard key={employee.id} employee={employee} isLoading={isLoading} /> 
+                  })
+                ) : ("Empty")
+              }
 
-          </div>
+            </div>
+          }
+
           <nav aria-label="Page navigation example">
             <ul className="pagination">
               <li className="page-item">
-                <a className="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
+                <input type='button' defaultValue="&laquo;" className="page-link" onClick={handlePreviousPage} aria-label="Previous" />
+
               </li>
               {Array.from({ length: totalSize }, (_, index) => (
-                <li key={index} className="page-item"><input type='button' onClick={handlePage} value={index + 1} className="page-link" /></li>
+                <li key={index} className="page-item"><input type='button' onClick={handlePage} defaultValue={index + 1} className={page === index ? "page-link bg-primary text-white" : "page-link"} /></li>
               ))}
               <li className="page-item">
-                <a className="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
+                <input type='button' defaultValue="&raquo;" className="page-link" onClick={handleNextPage} aria-label="Next" />
               </li>
             </ul>
           </nav>
@@ -102,7 +124,7 @@ const EmployeesPage = (props: Props) => {
         left: "50%",
         transform: "translate(-50%, -50%)"
       }}>
-        <Spinner />
+        <GlobalSpinner />
       </div>
   )
 }

@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 import { Employee, User } from '../../db';
 import { getEmployeeById } from '../../services/EmployeeService';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner/GlobalSpinner/GlobalSpinner';
 
 interface Props {
 

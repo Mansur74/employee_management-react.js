@@ -5,7 +5,7 @@ import { useNavigate, useOutletContext } from 'react-router'
 import { User } from '../../db';
 import { useState } from 'react';
 import { signIn } from '../../services/UserService';
-import Spinner from '../../components/Spinner/Spinner';
+import GlobalSpinner from '../../components/Spinner/GlobalSpinner/GlobalSpinner';
 
 type Props = {}
 
@@ -49,7 +49,7 @@ const SignInPage = (props: Props) => {
             left: "50%",
             transform: "translate(-50%, -50%)"
           }}>
-            <Spinner />
+            <GlobalSpinner />
           </div> :
           <>
             <div className="form-signin w-100 m-auto">

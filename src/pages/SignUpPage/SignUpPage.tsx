@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from 'react-router';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import { signUp } from '../../services/UserService';
-import Spinner from '../../components/Spinner/Spinner';
+import GlobalSpinner from '../../components/Spinner/GlobalSpinner/GlobalSpinner';
 
 type Props = {}
 
@@ -43,7 +43,7 @@ const SignUpPage = (props: Props) => {
             left: "50%",
             transform: "translate(-50%, -50%)"
           }}>
-            <Spinner />
+            <GlobalSpinner />
           </div> :
           <>
             <div className="form-signin w-100 m-auto">

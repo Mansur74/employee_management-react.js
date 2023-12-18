@@ -19,7 +19,7 @@ const Navbar = ({ user, handleSignOut }: Props) => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link active" to="/employee">Employees</Link>
+              <Link className="nav-link active" to={`/employee?page=${0}`}>Employees</Link>
             </li>
 
             <li className="nav-item dropdown">

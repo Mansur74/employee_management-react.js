@@ -3,7 +3,7 @@ import Navbar from '../Navbar/Navbar'
 import { Outlet, useNavigate } from 'react-router'
 import { signIn, signUp } from '../../services/UserService'
 import { User } from '../../db'
-import Spinner from '../Spinner/Spinner'
+import Spinner from '../Spinner/GlobalSpinner/GlobalSpinner'
 
 type Props = {}
 
