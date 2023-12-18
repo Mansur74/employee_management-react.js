@@ -23,7 +23,7 @@ const CreateEmployeePage = (props: Props) => {
     }
 
     createEmployee(body);
-    navigate("/employee");
+    navigate(`/employee?page=${0}`);
   }
 
   return (

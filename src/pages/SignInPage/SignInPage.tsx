@@ -5,7 +5,7 @@ import { useNavigate, useOutletContext } from 'react-router'
 import { User } from '../../db';
 import { useState } from 'react';
 import { signIn } from '../../services/UserService';
-import GlobalSpinner from '../../components/Spinner/GlobalSpinner/GlobalSpinner';
+import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
 
 type Props = {}
 
@@ -33,7 +33,7 @@ const SignInPage = (props: Props) => {
     if (typeof result?.data !== "string") {
       await localStorage.setItem("user", JSON.stringify(result?.data!));
       setUser(result?.data!);
-      navigate("/employee");
+      navigate(`/employee?page=${0}`);
     }
     setIsLoading(false);
 
@@ -43,14 +43,11 @@ const SignInPage = (props: Props) => {
     <>
       {
         isLoading ?
-          <div style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)"
-          }}>
-            <GlobalSpinner />
-          </div> :
+
+            <div style={{height: 500}}>
+              <CardSpinner />
+            </div>
+          :
           <>
             <div className="form-signin w-100 m-auto">
               <form onSubmit={handleSignIn}>

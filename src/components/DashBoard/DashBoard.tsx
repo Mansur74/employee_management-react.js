@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 import { Employee, User } from '../../db';
 import { getEmployeeById } from '../../services/EmployeeService';
-import Spinner from '../Spinner/GlobalSpinner/GlobalSpinner';
+import CardSpinner from '../Spinner/CardSpinner/CardSpinner';
 
 interface Props {
 
@@ -47,13 +47,13 @@ const DashBoard = (props: Props) => {
                   </h6>
 
                   <li className="nav-item">
-                    <Link className="nav-link" to={`employee/${employee?.id}`}>
+                    <Link className="nav-link" to={`/employee/${employee?.id}`}>
                       <FontAwesomeIcon icon={faUserTie} /> Employee
                     </Link>
                   </li>
 
                   <li className="nav-item">
-                    <Link className="nav-link" to={employee?.passport ? `passport/${employee?.passport?.id}` : "passport"}>
+                    <Link className="nav-link" to={employee?.passport ? `/employee/${employee?.id}/passport` : `/employee/${employee?.id}/passport-create`}>
                       <FontAwesomeIcon icon={faPassport} /> Passport
                     </Link>
                   </li>
@@ -68,13 +68,13 @@ const DashBoard = (props: Props) => {
                 </h6>
                 <ul className="nav flex-column mb-2">
                   <li className="nav-item">
-                    <Link className="nav-link" to={`employee/${employee?.id}/employee-edit`}>
+                    <Link className="nav-link" to={`/employee/${employee?.id}/employee-edit`}>
                       <FaUserEdit /> Edit Employee
                     </Link>
                   </li>
 
                   <li className="nav-item">
-                    <Link className="nav-link" to={employee?.passport ? `passport/${employee?.passport?.id}/passport-edit` : "passport"}>
+                    <Link className="nav-link" to={employee?.passport ? `/employee/${employee?.id}/passport-edit` : `/employee/${employee?.id}/passport-create`}>
                       <FaEdit /> Edit Passport
                     </Link>
 
@@ -96,7 +96,7 @@ const DashBoard = (props: Props) => {
           left: "50%",
           transform: "translate(-50%, -50%)"
           }}>
-            <Spinner />
+            <CardSpinner />
         </div>
 
       }

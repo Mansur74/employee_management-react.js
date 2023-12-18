@@ -34,7 +34,7 @@ const EmployeeEdit = (props: Props) => {
     }
 
     updateEmployeeById(employeeId!, body);
-    navigate("/employee");
+    navigate(`/employee?page=${0}`);
   }
   
 

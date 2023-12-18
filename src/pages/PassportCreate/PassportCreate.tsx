@@ -38,7 +38,7 @@ const PassportCreate = (props: Props) => {
     }
     
     await createPassport(employeeId!, passport);
-    navigate(`/employee/${employeeId}/passport/${passport.id}`);
+    navigate(`/employee/${employeeId}/passport`);
   }
 
   return (

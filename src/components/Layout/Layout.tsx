@@ -3,7 +3,7 @@ import Navbar from '../Navbar/Navbar'
 import { Outlet, useNavigate } from 'react-router'
 import { signIn, signUp } from '../../services/UserService'
 import { User } from '../../db'
-import Spinner from '../Spinner/GlobalSpinner/GlobalSpinner'
+import CardSpinner from '../Spinner/CardSpinner/CardSpinner'
 
 type Props = {}
 
@@ -36,7 +36,7 @@ const Layout = (props: Props) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)"}}>
-            <Spinner/>
+            <CardSpinner/>
         </div>: 
         <Outlet context={{setUser}}/>
        }

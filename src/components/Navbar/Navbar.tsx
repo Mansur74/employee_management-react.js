@@ -12,7 +12,8 @@ const Navbar = ({ user, handleSignOut }: Props) => {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/employee">Employee Management</Link>
+        <Link className="me-2" to={`/employee?page=${0}`}><img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="25" /></Link>
+        <Link className="navbar-brand" to={`/employee?page=${0}`}>Employee Management</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>

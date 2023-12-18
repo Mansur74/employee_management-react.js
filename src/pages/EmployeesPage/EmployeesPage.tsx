@@ -4,7 +4,7 @@ import Footer from '../../components/Footer/Footer'
 import { getAllEmployees } from '../../services/EmployeeService'
 import { Employee, User } from "../../db"
 import { useLocation, useNavigate } from 'react-router'
-import GlobalSpinner from '../../components/Spinner/GlobalSpinner/GlobalSpinner'
+import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner'
 import { Link } from 'react-router-dom'
 
 type Props = {}
@@ -43,23 +43,20 @@ const EmployeesPage = (props: Props) => {
 
   useEffect(() => {
     getEmployees();
-  }, []);
-
-  useEffect(() => {
-    navigate(`/employee?page=${page}`)
-    getEmployees();
   }, [page]);
 
   const handlePage = async (e: React.MouseEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     const page = parseInt(target.value) - 1;
     setPage(page);
+    navigate(`/employee?page=${page}`)
   }
 
   const handlePreviousPage = async (e: React.MouseEvent<HTMLInputElement>) => {
     if (page > 0) {
       const previousPage = page - 1;
       setPage(previousPage)
+      navigate(`/employee?page=${previousPage}`)
     }
     else
       return;
@@ -69,6 +66,7 @@ const EmployeesPage = (props: Props) => {
     if (page < totalSize - 1) {
       const nextPage = page + 1;
       setPage(nextPage)
+      navigate(`/employee?page=${nextPage}`)
     }
     else
       return
@@ -118,14 +116,7 @@ const EmployeesPage = (props: Props) => {
           <Footer />
         </div>
       </> :
-      <div style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)"
-      }}>
-        <GlobalSpinner />
-      </div>
+      <CardSpinner/>
   )
 }
 

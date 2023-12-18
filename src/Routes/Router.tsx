@@ -18,32 +18,35 @@ export const router = createBrowserRouter([
     element: <Layout/>,
     children: [
       { 
+        path: "", 
+        element: <EmployeesPage/>
+      },
+      { 
         path: "employee", 
         element: <EmployeesPage/>
       },
-
       { 
-        path: "", 
+        path: "employee/:employeeId", 
         element: <DashBoard/>,
         children: [
           {
-            path: "employee/:employeeId",
+            path: "",
             element: <EmployeeProfile/>
           },
           {
-            path: "passport/:passportId",
+            path: "passport",
             element: <PassportProfile/>
           },
           {
-            path: "passport",
+            path: "passport-create",
             element: <PassportCreate/>
           },
           {
-            path: "employee/:employeeId/employee-edit",
+            path: "employee-edit",
             element: <EmployeeEdit/>
           },
           {
-            path: "passport/:passportId/passport-edit",
+            path: "passport-edit",
             element: <PassportEdit/>
           }
         ]

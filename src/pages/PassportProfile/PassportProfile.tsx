@@ -3,20 +3,22 @@ import { useParams } from 'react-router';
 import { Passport } from '../../db';
 import { getPassportById } from '../../services/PassportService';
 import CountryCard from '../../components/Cards/CountryCard/CountryCard';
+import { getEmployeeById } from '../../services/EmployeeService';
 
 type Props = {}
 
 const PassportProfile = (props: Props) => {
 
-  const { passportId } = useParams();
+  const { employeeId } = useParams();
   const [passport, setPassport] = useState<Passport>();
   const [date, setDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const getPassport = async () => {
-      const result = await getPassportById(passportId!);
-      setPassport(result?.data);
-      setDate(new Date(result?.data.validDate!));
+      const result = await getEmployeeById(employeeId!);
+      console.log(result?.data.passport!)
+      setPassport(result?.data.passport!);
+      setDate(new Date(result?.data.passport?.validDate!));
     }
     getPassport();
   }, []);

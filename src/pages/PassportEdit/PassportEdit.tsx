@@ -3,12 +3,13 @@ import { getAllCountries } from '../../services/CountryService';
 import { Country, Passport } from '../../db';
 import { useNavigate, useParams } from 'react-router';
 import { getPassportById, updatePassportById } from '../../services/PassportService';
+import { getEmployeeById } from '../../services/EmployeeService';
 
 type Props = {}
 
 const PassportEdit = (props: Props) => {
   const navigate = useNavigate();
-  const {passportId} = useParams();
+  const {employeeId} = useParams();
   const [serverError, setServerError] = useState<string | null>(null);
   const [countries, setCountries] = useState<Country[]>([]);
   const [passport, setPassport] = useState<Passport>();
@@ -17,8 +18,8 @@ const PassportEdit = (props: Props) => {
     const getCountries = async () => {
       const resultCountries = await getAllCountries();
       typeof resultCountries !== "string" ? setCountries(resultCountries.data) : setServerError(resultCountries);
-      const resultPassport = await getPassportById(passportId!);
-      setPassport(resultPassport!.data);
+      const resultEmployee = await getEmployeeById(employeeId!);
+      setPassport(resultEmployee?.data.passport!);
     };
     getCountries();
   }, []);
@@ -35,14 +36,14 @@ const PassportEdit = (props: Props) => {
     });
 
     const passport : any = {
-      id: passportId,
+      id: employeeId,
       passportNumber: parseInt(data.get("passportNumber") as string) as number,
       validDate: data.get("validDate") as string,
       countries: countryIds
     }
 
-    await updatePassportById(passportId!, passport);
-    navigate(`/passport/${passport.id}`);
+    await updatePassportById(passport.id, passport);
+    navigate(`/employee/${employeeId}/passport`);
     
   }
 

@@ -31,10 +31,10 @@ const EmployeeCard = ({ employee, isLoading }: Props) => {
               {
                 !isLoading ?
                   <>
-                    <Link to={`${employee.id}`} className='btn btn-sm btn-outline-secondary'>
+                    <Link to={`/employee/${employee.id}`} className='btn btn-sm btn-outline-secondary'>
                       View
                     </Link>
-                    <Link to={`${employee.id}/employee-edit`} className='btn btn-sm btn-outline-secondary'>
+                    <Link to={`/employee/${employee.id}/employee-edit`} className='btn btn-sm btn-outline-secondary'>
                       Edit
                     </Link>
                   </>
