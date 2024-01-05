@@ -13,6 +13,7 @@ const EmployeesPage = (props: Props) => {
   const params = new URLSearchParams(location.search);
   const navigate = useNavigate();
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [filteredEmployees, setFiteredEmployees] = useState<Employee[]>([]);
   const [serverError, setServerError] = useState<String | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -30,6 +31,7 @@ const EmployeesPage = (props: Props) => {
       try {
         const result = await getAllEmployees(page, size);
         setEmployees(result.data.data.rows);
+        setFiteredEmployees(result.data.data.rows);
         setTotalPages(result.data.data.totalPages);
       } catch (error: any) {
         setServerError(error.message);
@@ -73,6 +75,13 @@ const EmployeesPage = (props: Props) => {
       return
   }
 
+  const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const result = employees.filter(employee => employee.firstName?.toLowerCase().includes(value.toLowerCase()) 
+    || employee.lastName?.toLowerCase().includes(value.toLowerCase()))
+    setFiteredEmployees(result);
+  }
+
   return (
     user ?
       <>
@@ -86,13 +95,20 @@ const EmployeesPage = (props: Props) => {
             </div>
           </div>
         </div>
+
+        <div className='container-fluid mb-5'>
+          <form className="d-flex justify-content-center">
+            <input className="form-control w-25" type="search" placeholder="Filter the page" aria-label="Search" onChange={handleFilter} />
+          </form>
+        </div>
+
         <div className="container">
           {
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3">
               {
-                employees.length > 0 ? (
-                  employees.map((employee) => {
-                    return <EmployeeCard key={employee.id} employee={employee} isLoading={isLoading} /> 
+                filteredEmployees.length > 0 ? (
+                  filteredEmployees.map((employee) => {
+                    return <EmployeeCard key={employee.id} employee={employee} isLoading={isLoading} />
                   })
                 ) : ("Empty")
               }
@@ -117,7 +133,7 @@ const EmployeesPage = (props: Props) => {
           <Footer />
         </div>
       </> :
-      <CardSpinner/>
+      <CardSpinner />
   )
 }
 

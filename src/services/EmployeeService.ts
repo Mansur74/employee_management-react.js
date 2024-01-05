@@ -1,5 +1,5 @@
 import axios from "axios"
-import { DataResult, Employee, EmployeePage } from "../db"
+import { DataResult, Employee, EmployeePage, Result } from "../db"
 import { getAccessToken } from "./AuthorizationService";
 
 export const getAllEmployees = async (page: number, size: number) => {
@@ -45,7 +45,7 @@ export const updateEmployeeById = async (id: string, employee: Employee) => {
 
 export const deleteEmployeeById = async (id: string) => {
   const accessToken = (await getAccessToken()).data.accessToken;
-  const result = await axios.delete<DataResult<Employee>>(`http://localhost:8080/api/employee/${id}`, {
+  const result = await axios.delete<Result>(`http://localhost:8080/api/employee/${id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }

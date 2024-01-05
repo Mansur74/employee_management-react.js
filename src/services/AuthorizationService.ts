@@ -1,5 +1,5 @@
 import axios from "axios"
-import { DataResult, Token, User } from "../db";
+import { DataResult, Result, Token, User } from "../db";
 
 export const signUp = async (user: User) => {
   const result = await axios.post<DataResult<string>>("http://localhost:8080/api/authorization/sign-up", user);
@@ -34,8 +34,8 @@ export const authorize = async () => {
 
 export const logout = async () => {
   localStorage.removeItem("user");
-  const accessToken = localStorage.getItem("accessToken");
-  const result = await axios.delete<DataResult<string>>("http://localhost:8080/api/authorization/logout", {
+  const accessToken = localStorage.getItem("refreshToken");
+  const result = await axios.delete<Result>("http://localhost:8080/api/authorization/logout", {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }

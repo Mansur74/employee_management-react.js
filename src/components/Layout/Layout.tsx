@@ -17,7 +17,7 @@ const Layout = (props: Props) => {
       setUser(JSON.parse(result!));
     }
     getUser();
-  }, []);
+  }, [user]);
 
   const handleSignOut = async () => {
     setIsLoading(true);

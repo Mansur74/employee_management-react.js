@@ -35,6 +35,12 @@ export interface User {
   userName?: string,
   email?: string,
   password?: string,
+  roles?: Role[]
+}
+
+export interface Role {
+  id?: number,
+  name?: string
 }
 
 export interface EmployeePage {

@@ -29,7 +29,7 @@ const Navbar = ({ user, handleSignOut }: Props) => {
               </a>
               <ul className="dropdown-menu">
                 <Link className="dropdown-item" to="/employee/create">Create Employee</Link>
-                <Link className="dropdown-item" to="/countries">Countries</Link>
+                {user?.roles?.find(role => role.name === "ADMIN") ? <Link className="dropdown-item" to="/countries">Countries</Link> : ""}
               </ul>
             </li>
 
@@ -39,7 +39,7 @@ const Navbar = ({ user, handleSignOut }: Props) => {
             user ?
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <Link className="nav-link active" to="/user">Profile</Link>
+                  <Link className="nav-link active" to="/user/profile">Profile</Link>
                 </li>
                 <li className="nav-item">
                   <input type='button' value="Sign Out" onClick={handleSignOut} className="nav-link active" />
