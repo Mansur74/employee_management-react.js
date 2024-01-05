@@ -1,17 +1,13 @@
 import axios from "axios"
-import { Country } from "../db";
+import { Country, DataResult } from "../db";
+import { getAccessToken } from "./AuthorizationService";
 
 export const getAllCountries = async () => {
-  try {
-    const result = axios.get<Country[]>("http://localhost:8080/api/country");
-    return result;
-  } 
-  catch (error) {
-    if (axios.isAxiosError(error))
-      return error.message;
-
-    else
-      return "Anexpected Error!";
-
-  }
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = axios.get<DataResult<Country[]>>("http://localhost:8080/api/country", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
 }

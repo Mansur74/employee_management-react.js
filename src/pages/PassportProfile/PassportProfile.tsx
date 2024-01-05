@@ -16,9 +16,8 @@ const PassportProfile = (props: Props) => {
   useEffect(() => {
     const getPassport = async () => {
       const result = await getEmployeeById(employeeId!);
-      console.log(result?.data.passport!)
-      setPassport(result?.data.passport!);
-      setDate(new Date(result?.data.passport?.validDate!));
+      setPassport(result?.data.data.passport!);
+      setDate(new Date(result?.data.data.passport?.validDate!));
     }
     getPassport();
   }, []);

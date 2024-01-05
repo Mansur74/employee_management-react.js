@@ -1,62 +1,54 @@
 import axios from "axios"
-import { Employee, EmployeePage } from "../db"
+import { DataResult, Employee, EmployeePage } from "../db"
+import { getAccessToken } from "./AuthorizationService";
 
 export const getAllEmployees = async (page: number, size: number) => {
-  try {
-    const data = await axios.get<EmployeePage>(`http://localhost:8080/api/employee?page=${page}&&size=${size}`);
-    return data;
-  }
-  catch (error) {
-    if (axios.isAxiosError(error))
-      return error.message;
-
-    else
-      return "Anexpected Error!";
-
-  }
-
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = await axios.get<DataResult<EmployeePage>>(`http://localhost:8080/api/employee?page=${page}&&size=${size}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
 }
 
 export const getEmployeeById = async (id: string) => {
-  try {
-    const data = await axios.get<Employee>(`http://localhost:8080/api/employee/${id}`);
-    return data;
-  }
-  catch (error: any) {
-    console.log(error)
-  }
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = await axios.get<DataResult<Employee>>(`http://localhost:8080/api/employee/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
 
 }
 
 export const createEmployee = async (employee: Employee) => {
-  try {
-    const data = await axios.post<Employee>(`http://localhost:8080/api/employee`, employee);
-    return data;
-  }
-  catch (error: any) {
-    console.log(error)
-  }
-
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = await axios.post<DataResult<Employee>>(`http://localhost:8080/api/employee`, employee, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
 }
 
 export const updateEmployeeById = async (id: string, employee: Employee) => {
-  try {
-    const data = await axios.patch<Employee>(`http://localhost:8080/api/employee/${id}`, employee);
-    return data;
-  }
-  catch (error: any) {
-    console.log(error)
-  }
-
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = await axios.patch<DataResult<Employee>>(`http://localhost:8080/api/employee/${id}`, employee, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
 }
 
 export const deleteEmployeeById = async (id: string) => {
-  try {
-    const data = await axios.delete<Employee>(`http://localhost:8080/api/employee/${id}`);
-    return data;
-  }
-  catch (error: any) {
-    console.log(error)
-  }
-
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = await axios.delete<DataResult<Employee>>(`http://localhost:8080/api/employee/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
 }

@@ -26,7 +26,7 @@ const DashBoard = (props: Props) => {
       setUser(user)
       if (user) {
         const result = await getEmployeeById(employeeId!);
-        setPassport(result?.data);
+        setPassport(result?.data.data);
       }
       else
         navigate("/sign-in");

@@ -11,7 +11,7 @@ const CountriesPage = (props: Props) => {
   useEffect(() => {
     const getCountries = async () => {
       const result = await getAllCountries();
-      typeof result !== "string" ? setCountries(result.data) : setServerError(result);
+      typeof result !== "string" ? setCountries(result.data.data) : setServerError(result);
     }
     getCountries()
   }, []);

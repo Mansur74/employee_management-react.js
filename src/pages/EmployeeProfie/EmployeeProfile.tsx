@@ -17,8 +17,8 @@ const EmployeeProfile = (props: Props) => {
   useEffect(() => {
     const getEmployee = async () => {
       const result = await getEmployeeById(employeeId!);
-      setEmployee(result?.data);
-      setDate(new Date(result?.data.hiringDate!));
+      setEmployee(result?.data.data);
+      setDate(new Date(result?.data.data.hiringDate!));
     }
     getEmployee();
   }, []);
@@ -40,7 +40,7 @@ const EmployeeProfile = (props: Props) => {
             <p><b>Age</b> {employee?.age} </p>
             <p><b>Hiring Date:</b> {date?.toLocaleDateString()}</p>
             <p><b>Department:</b> {employee?.department}</p>
-            <p><b>Gender:</b> Gender</p>
+            <p><b>Gender:</b> {employee?.gender}</p>
             <p className="mb-0"><b>Salary:</b> {employee?.salary}₺</p>
           </div>
 

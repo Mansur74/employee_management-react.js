@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar/Navbar'
-import { Outlet, useNavigate } from 'react-router'
-import { signIn, signUp } from '../../services/UserService'
+import { Outlet } from 'react-router'
+import { getAccessToken, logout } from '../../services/AuthorizationService'
 import { User } from '../../db'
 import CardSpinner from '../Spinner/CardSpinner/CardSpinner'
 
@@ -21,7 +21,7 @@ const Layout = (props: Props) => {
 
   const handleSignOut = async () => {
     setIsLoading(true);
-    await localStorage.removeItem("user");
+    await logout();
     setUser(null);
     setIsLoading(false);
   }

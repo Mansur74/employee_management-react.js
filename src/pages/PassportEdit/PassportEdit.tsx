@@ -17,9 +17,9 @@ const PassportEdit = (props: Props) => {
   useEffect(() => {
     const getCountries = async () => {
       const resultCountries = await getAllCountries();
-      typeof resultCountries !== "string" ? setCountries(resultCountries.data) : setServerError(resultCountries);
+      setCountries(resultCountries.data.data);
       const resultEmployee = await getEmployeeById(employeeId!);
-      setPassport(resultEmployee?.data.passport!);
+      setPassport(resultEmployee?.data.data.passport!);
     };
     getCountries();
   }, []);
@@ -29,20 +29,19 @@ const PassportEdit = (props: Props) => {
 
     const data = new FormData(e.target as HTMLFormElement);
 
-    let countryIds: number[] = [];
+    let validCountries: Country[] = [];
     countries.forEach((country) => {
       if(country.id === (parseInt(data.get(country.countryName!) as string) as number))
-        countryIds = [...countryIds, country.id];
+      validCountries = [...validCountries, {id: country.id}];
     });
 
-    const passport : any = {
-      id: employeeId,
+    const updatedPassport : any = {
       passportNumber: parseInt(data.get("passportNumber") as string) as number,
       validDate: data.get("validDate") as string,
-      countries: countryIds
+      countries: validCountries
     }
 
-    await updatePassportById(passport.id, passport);
+    await updatePassportById(passport?.id?.toString()!, updatedPassport);
     navigate(`/employee/${employeeId}/passport`);
     
   }

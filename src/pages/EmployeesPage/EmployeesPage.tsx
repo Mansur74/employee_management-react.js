@@ -5,7 +5,6 @@ import { getAllEmployees } from '../../services/EmployeeService'
 import { Employee, User } from "../../db"
 import { useLocation, useNavigate } from 'react-router'
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner'
-import { Link } from 'react-router-dom'
 
 type Props = {}
 
@@ -16,7 +15,7 @@ const EmployeesPage = (props: Props) => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [serverError, setServerError] = useState<String | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [totalSize, setTotalSize] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const [page, setPage] = useState<number>(parseInt(params.get("page")!));
   const [size, setSize] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -27,13 +26,15 @@ const EmployeesPage = (props: Props) => {
     setUser(user);
 
     if (user) {
-      const result = await getAllEmployees(page, size);
-      if (typeof result === "string")
-        setServerError(result);
-      else if (Array.isArray(result.data.rows)) {
-        setEmployees(result.data.rows);
-        setTotalSize(result.data.count);
+
+      try {
+        const result = await getAllEmployees(page, size);
+        setEmployees(result.data.data.rows);
+        setTotalPages(result.data.data.totalPages);
+      } catch (error: any) {
+        setServerError(error.message);
       }
+
       setIsLoading(false);
 
     }
@@ -63,7 +64,7 @@ const EmployeesPage = (props: Props) => {
   }
 
   const handleNextPage = async (e: React.MouseEvent<HTMLInputElement>) => {
-    if (page < totalSize - 1) {
+    if (page < totalPages - 1) {
       const nextPage = page + 1;
       setPage(nextPage)
       navigate(`/employee?page=${nextPage}`)
@@ -105,7 +106,7 @@ const EmployeesPage = (props: Props) => {
                 <input type='button' defaultValue="&laquo;" className="page-link" onClick={handlePreviousPage} aria-label="Previous" />
 
               </li>
-              {Array.from({ length: totalSize }, (_, index) => (
+              {Array.from({ length: totalPages }, (_, index) => (
                 <li key={index} className="page-item"><input type='button' onClick={handlePage} defaultValue={index + 1} className={page === index ? "page-link bg-primary text-white" : "page-link"} /></li>
               ))}
               <li className="page-item">

@@ -14,6 +14,7 @@ const CreateEmployeePage = (props: Props) => {
     const body : Employee = {
       firstName: data.get("firstName") as string,
       lastName: data.get("lastName") as string,
+      gender: data.get("gender") as string,
       age: parseInt(data.get("age") as string) as number,
       hiringDate: data.get("hiringDate") as string,
       department: data.get("department") as string,
@@ -36,6 +37,10 @@ const CreateEmployeePage = (props: Props) => {
         <div className="mb-3">
           <label htmlFor="lastName" className="form-label">Lastname</label>
           <input type="text" name='lastName' className="form-control" id="lastName" aria-describedby="lastName" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="gender" className="form-label">Gender</label>
+          <input type="text" name='gender' className="form-control" id="gender" aria-describedby="gender" />
         </div>
         <div className="mb-3">
           <label htmlFor="age" className="form-label">Age</label>

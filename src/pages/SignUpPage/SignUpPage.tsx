@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, useOutletContext } from 'react-router';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
-import { signUp } from '../../services/UserService';
+import { signUp } from '../../services/AuthorizationService';
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
 
 type Props = {}

@@ -1,34 +1,33 @@
 import axios from "axios";
-import { Passport } from "../db";
+import { DataResult, Passport } from "../db";
+import { getAccessToken } from "./AuthorizationService";
 
 export const getPassportById = async (id: string) => {
-  try {
-    const data = await axios.get<Passport>(`http://localhost:8080/api/passport/${id}`);
-    return data;
-  } 
-  catch (error: any) {
-    console.log(error)
-  }
- 
- }
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = await axios.get<DataResult<Passport>>(`http://localhost:8080/api/passport/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
+}
 
- export const createPassport = async (employeeId: string, body: any) => {
-  try {
-    const data = await axios.post(`http://localhost:8080/api/passport/${employeeId}`, body);
-    return data;
-  } 
-  catch (error: any) {
-    console.log(error)
-  }
- }
+export const createPassport = async (employeeId: string, passport: Passport) => {
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = await axios.post<DataResult<Passport>>(`http://localhost:8080/api/employee/${employeeId}`, passport, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
+}
 
- export const updatePassportById = async (passportId: string, body: any) => {
-  try {
-    const data = await axios.patch(`http://localhost:8080/api/passport/${passportId}`, body);
-    return data;
-  } 
-  catch (error: any) {
-    console.log(error)
-  }
- 
- }
+export const updatePassportById = async (passportId: string, passport: Passport) => {
+  const accessToken = (await getAccessToken()).data.accessToken;
+  const result = await axios.patch<DataResult<Passport>>(`http://localhost:8080/api/passport/${passportId}`, passport, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
+}

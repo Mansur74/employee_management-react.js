@@ -4,8 +4,8 @@ import './SignInPage.css'
 import { useNavigate, useOutletContext } from 'react-router'
 import { User } from '../../db';
 import { useState } from 'react';
-import { signIn } from '../../services/UserService';
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
+import { authorize, signIn } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -16,6 +16,7 @@ interface OuterContext {
 const SignInPage = (props: Props) => {
   const { setUser }: OuterContext = useOutletContext();
   const [isLoading, setIsLoading] = useState<boolean>();
+  const [serverError, setServerError] = useState<string>();
   const navigate = useNavigate();
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,13 +29,19 @@ const SignInPage = (props: Props) => {
       password: form.get("password") as string
     }
 
-    const result = await signIn(body);
+    try {
+      await signIn(body);
+      const result = await authorize();
+      const user: User = result?.data.data;
+      localStorage.setItem("user", JSON.stringify(user));
 
-    if (typeof result?.data !== "string") {
-      await localStorage.setItem("user", JSON.stringify(result?.data!));
-      setUser(result?.data!);
+      setUser(user);
       navigate(`/employee?page=${0}`);
     }
+    catch (error: any) {
+      setServerError(error.message)
+    }
+
     setIsLoading(false);
 
   }
@@ -44,9 +51,9 @@ const SignInPage = (props: Props) => {
       {
         isLoading ?
 
-            <div style={{height: 500}}>
-              <CardSpinner />
-            </div>
+          <div style={{ height: 500 }}>
+            <CardSpinner />
+          </div>
           :
           <>
             <div className="form-signin w-100 m-auto">
@@ -62,6 +69,9 @@ const SignInPage = (props: Props) => {
                   <input type="password" name='password' className="form-control" id="password" placeholder="Password" />
                   <label htmlFor="password">Password</label>
                 </div>
+                {
+                  serverError && <span className="mt-3 text-danger">{serverError}</span>
+                }
 
                 <div className="form-check text-start my-3">
                   <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />

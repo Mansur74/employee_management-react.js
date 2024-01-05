@@ -2,6 +2,7 @@ export interface Employee {
   id?: number,
   firstName?: string,
   lastName?: string,
+  gender?: string,
   age?: number,
   hiringDate?: string,
   department?: string,
@@ -34,10 +35,27 @@ export interface User {
   userName?: string,
   email?: string,
   password?: string,
-  accessToken?: string
 }
 
 export interface EmployeePage {
-  count: number,
+  pageNo: number,
+  pageSize: number,
+  totalPages: number,
   rows: Employee[]
+}
+
+export interface DataResult<T>{
+  success: boolean,
+  data: T,
+  message: string,
+}
+
+export interface Result{
+  success: boolean,
+  message: string,
+}
+
+export interface Token {
+  accessToken: string,
+  refreshToken: string
 }

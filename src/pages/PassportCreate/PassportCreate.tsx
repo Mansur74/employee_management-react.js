@@ -15,7 +15,7 @@ const PassportCreate = (props: Props) => {
   useEffect(() => {
     const getCountries = async () => {
       const result = await getAllCountries();
-      typeof result !== "string" ? setCountries(result.data) : setServerError(result);
+       setCountries(result.data.data);
     };
     getCountries();
   }, []);
@@ -24,17 +24,16 @@ const PassportCreate = (props: Props) => {
     e.preventDefault();
 
     const data = new FormData(e.target as HTMLFormElement);
-    let countryIds: number[] = [];
+    let validCountries: Country[] = [];
     countries.forEach((country) => {
       if(country.id === (parseInt(data.get(country.countryName!) as string) as number))
-        countryIds = [...countryIds, country.id];
+      validCountries = [...validCountries, {id: country.id}];
     });
 
-    const passport: any = {
-      id: employeeId,
+    const passport: Passport = {
       passportNumber: parseInt(data.get("passportNumber") as string) as number,
       validDate: data.get("validDate") as string,
-      countries: countryIds
+      countries: validCountries
     }
     
     await createPassport(employeeId!, passport);
