@@ -17,8 +17,8 @@ const PassportEdit = (props: Props) => {
   useEffect(() => {
     const getCountries = async () => {
       const resultCountries = await getAllCountries();
-      setCountries(resultCountries.data.data);
       const resultEmployee = await getEmployeeById(employeeId!);
+      setCountries(resultCountries.data.data);
       setPassport(resultEmployee?.data.data.passport!);
     };
     getCountries();
@@ -35,7 +35,7 @@ const PassportEdit = (props: Props) => {
       validCountries = [...validCountries, {id: country.id}];
     });
 
-    const updatedPassport : any = {
+    const updatedPassport : Passport = {
       passportNumber: parseInt(data.get("passportNumber") as string) as number,
       validDate: data.get("validDate") as string,
       countries: validCountries
@@ -56,7 +56,7 @@ const PassportEdit = (props: Props) => {
 
         <div className="mb-3">
           <label htmlFor="validDate" className="form-label">Valid Date</label>
-          <input type="date" defaultValue={passport?.validDate?.split("T")[0]} name='validDate' className="form-control" id="validDate" aria-describedby="validDate" />
+          <input type="datetime-local" defaultValue={passport?.validDate} name='validDate' className="form-control" id="validDate" aria-describedby="validDate" />
         </div>
 
         <div>

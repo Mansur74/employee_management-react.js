@@ -55,7 +55,7 @@ const PassportCreate = (props: Props) => {
 
         <div className="mb-3">
           <label htmlFor="validDate" className="form-label">Valid Date</label>
-          <input type="date" name='validDate' className="form-control" id="validDate" aria-describedby="validDate" />
+          <input type="datetime-local" name='validDate' className="form-control" id="validDate" aria-describedby="validDate" />
         </div>
 
         <div>

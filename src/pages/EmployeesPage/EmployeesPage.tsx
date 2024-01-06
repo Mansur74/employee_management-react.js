@@ -3,10 +3,15 @@ import EmployeeCard from '../../components/Cards/EmployeeCard/EmployeeCard'
 import Footer from '../../components/Footer/Footer'
 import { getAllEmployees } from '../../services/EmployeeService'
 import { Employee, User } from "../../db"
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation, useNavigate, useOutletContext } from 'react-router'
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner'
 
 type Props = {}
+
+interface OuterContext {
+  user: User | null,
+  setUser: (user: User) => void
+}
 
 const EmployeesPage = (props: Props) => {
   const location = useLocation();
@@ -15,33 +20,33 @@ const EmployeesPage = (props: Props) => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [filteredEmployees, setFiteredEmployees] = useState<Employee[]>([]);
   const [serverError, setServerError] = useState<String | null>(null);
-  const [user, setUser] = useState<User | null>(null);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [page, setPage] = useState<number>(parseInt(params.get("page")!));
+  const [page, setPage] = useState<number>(0);
   const [size, setSize] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user, setUser }: OuterContext = useOutletContext();
+
 
   const getEmployees = async () => {
-    setIsLoading(true);
-    const user: User = JSON.parse(await localStorage.getItem("user")!);
-    setUser(user);
 
-    if (user) {
-
+    const user: User | null = JSON.parse(localStorage.getItem("user")!);
+    setUser(user!);
+    if (user)
+    {
       try {
+        const page = params.get("page") ? parseInt(params.get("page")!) : 0;
         const result = await getAllEmployees(page, size);
+        setPage(page);
         setEmployees(result.data.data.rows);
         setFiteredEmployees(result.data.data.rows);
         setTotalPages(result.data.data.totalPages);
       } catch (error: any) {
         setServerError(error.message);
       }
-
-      setIsLoading(false);
-
     }
     else
-      navigate("/sign-in");
+      navigate("/sign-in")
+  
   }
 
   useEffect(() => {
@@ -77,8 +82,7 @@ const EmployeesPage = (props: Props) => {
 
   const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const result = employees.filter(employee => employee.firstName?.toLowerCase().includes(value.toLowerCase()) 
-    || employee.lastName?.toLowerCase().includes(value.toLowerCase()))
+    const result = employees.filter(employee => (employee.firstName! + " " + employee.lastName!).toLowerCase().includes(value.toLowerCase()))
     setFiteredEmployees(result);
   }
 
@@ -98,7 +102,7 @@ const EmployeesPage = (props: Props) => {
 
         <div className='container-fluid mb-5'>
           <form className="d-flex justify-content-center">
-            <input className="form-control w-25" type="search" placeholder="Filter the page" aria-label="Search" onChange={handleFilter} />
+            <input className="form-control w-25" type="search" placeholder="Filter..." aria-label="Search" onChange={handleFilter} />
           </form>
         </div>
 
@@ -133,7 +137,14 @@ const EmployeesPage = (props: Props) => {
           <Footer />
         </div>
       </> :
-      <CardSpinner />
+      <div style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)"
+      }}>
+        <CardSpinner />
+      </div>
   )
 }
 

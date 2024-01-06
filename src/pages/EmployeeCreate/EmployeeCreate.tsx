@@ -8,8 +8,8 @@ type Props = {}
 
 const CreateEmployeePage = (props: Props) => {
   const navigate = useNavigate();
-  const handleCreateEmployee = (e: React.FormEvent<HTMLFormElement>) => {
-
+  const handleCreateEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const data = new FormData(e.target as HTMLFormElement);
     const body : Employee = {
       firstName: data.get("firstName") as string,
@@ -23,7 +23,7 @@ const CreateEmployeePage = (props: Props) => {
       imgURL: data.get("imgURL") as string
     }
 
-    createEmployee(body);
+    await createEmployee(body);
     navigate(`/employee?page=${0}`);
   }
 
@@ -48,7 +48,7 @@ const CreateEmployeePage = (props: Props) => {
         </div>
         <div className="mb-3">
           <label htmlFor="hiringDate" className="form-label">Hiring Date</label>
-          <input type="text" name='hiringDate' className="form-control" id="hiringDate" aria-describedby="hiringDate" />
+          <input type="datetime-local" name='hiringDate' className="form-control" id="hiringDate" aria-describedby="hiringDate" />
         </div>
         <div className="mb-3">
           <label htmlFor="department" className="form-label">Department</label>

@@ -19,8 +19,8 @@ const EmployeeEdit = (props: Props) => {
     getEmployee();
   }, []);
 
-  const handleUpdateEmployee = (e: React.FormEvent<HTMLFormElement>) => {
-
+  const handleUpdateEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const data = new FormData(e.target as HTMLFormElement);
     const body : Employee = {
       firstName: data.get("firstName") as string,
@@ -34,8 +34,8 @@ const EmployeeEdit = (props: Props) => {
       imgURL: data.get("imgURL") as string
     }
 
-    updateEmployeeById(employeeId!, body);
-    navigate(`/employee?page=${0}`);
+    await updateEmployeeById(employeeId!, body);
+    navigate(`/employee/${employeeId}`);
   }
   
 
@@ -60,7 +60,7 @@ const EmployeeEdit = (props: Props) => {
         </div>
         <div className="mb-3">
           <label htmlFor="hiringDate" className="form-label">Hiring Date</label>
-          <input type="text" name='hiringDate' defaultValue={employee?.hiringDate} className="form-control" id="hiringDate" aria-describedby="hiringDate" />
+          <input type="datetime-local" name='hiringDate' defaultValue={employee?.hiringDate} className="form-control" id="hiringDate" aria-describedby="hiringDate" />
         </div>
         <div className="mb-3">
           <label htmlFor="department" className="form-label">Department</label>

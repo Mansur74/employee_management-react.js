@@ -12,6 +12,7 @@ import CountriesPage from '../pages/CountriesPage/CountriesPage';
 import SignInPage from '../pages/SignInPage/SignInPage';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
+import ProfileEdit from '../pages/ProfileEdit/ProfileEdit';
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       { 
         path: "/user/profile", 
         element: <ProfilePage/>
+      },
+      { 
+        path: "/user/profile-edit", 
+        element: <ProfileEdit/>
       },
       { 
         path: "employee", 

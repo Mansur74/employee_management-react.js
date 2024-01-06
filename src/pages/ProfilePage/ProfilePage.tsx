@@ -3,15 +3,35 @@ import { authorize } from '../../services/AuthorizationService'
 import { User } from '../../db';
 import './ProfilePage.css'
 import { FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
 
 type Props = {}
 
+interface OuterContext {
+  user: User | null,
+  setUser: (user: User) => void
+}
+
 const ProfilePage = (props: Props) => {
-  const [user, setUser] = useState<User>();
+  const { user, setUser }: OuterContext = useOutletContext();
+  const navigate = useNavigate();
 
   const getUser = async () => {
-    const result = await authorize();
-    setUser(result.data.data);
+    const user: User | null = JSON.parse(localStorage.getItem("user")!);
+    setUser(user!);
+    if (user)
+    {
+      try {
+        const result = await authorize();
+        setUser(result.data.data);
+      } catch (error: any) {
+
+      }
+    }
+    else
+      navigate("/sign-in")
+
   }
 
   useEffect(() => {
@@ -19,6 +39,7 @@ const ProfilePage = (props: Props) => {
   }, []);
 
   return (
+    user ? 
     <div className='container'>
       <div className="card">
         <div className="card-body">
@@ -28,26 +49,26 @@ const ProfilePage = (props: Props) => {
             </a>
             <div className="dropdown-menu dropdown-menu-end">
 
-              <a href="#" className="dropdown-item">Edit</a>
+              <Link to={`/user/profile-edit`} className="dropdown-item">Edit</Link>
 
               <a href="#" className="dropdown-item">Delete</a>
 
-              <a href="#" className="dropdown-item">Block</a>
             </div>
           </div>
           <div className="d-flex align-items-start">
             <img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="rounded-circle avatar-lg img-thumbnail" alt="profile-image" />
             <div className="w-100 ms-3">
               <h4 className="my-0">{user?.firstName} {user?.lastName} {user?.roles?.find(role => role.name === "ADMIN") ? "(#Admin)": ""}</h4>
-              <a href='#' className='text-decoration-none'><p className="text-muted">@{user?.userName}</p></a>
-              <button type="button" className="btn btn-primary btn-xs waves-effect mb-2 waves-light">Follow</button>
+              <a href='/user/profile' className='text-decoration-none d-inline'><p className="text-muted d-inline">@{user?.userName}</p></a>
+              <br/>
+              <button type="button" className="mt-1 btn btn-primary btn-xs waves-effect mb-2 waves-light">Follow</button>
             </div>
           </div>
 
           <div className="mt-3">
             <h4 className="font-13 text-uppercase">About Me :</h4>
             <p className="text-muted font-13 mb-3">
-              Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
+              Hi I'm {user?.firstName} {user?.lastName}, has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
             </p>
             <p className="text-muted mb-2 font-13"><strong>Full Name :</strong><span className="ms-2">{user?.firstName} {user?.lastName}</span></p>
 
@@ -74,6 +95,14 @@ const ProfilePage = (props: Props) => {
           </ul>
         </div>
       </div>
+    </div>:
+    <div style={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)"
+    }}>
+      <CardSpinner />
     </div>
   )
 }

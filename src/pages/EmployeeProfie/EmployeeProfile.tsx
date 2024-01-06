@@ -5,11 +5,12 @@ import Footer from '../../components/Footer/Footer';
 import EmployeeCard from '../../components/Cards/EmployeeCard/EmployeeCard';
 import { FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa';
 import './EmployeeProfile.css'
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 type Props = {}
 
 const EmployeeProfile = (props: Props) => {
+  const navigate = useNavigate();
   const { employeeId } = useParams();
   const [employee, setEmployee] = useState<Employee>();
   const [date, setDate] = useState<Date | null>(null);
@@ -25,6 +26,7 @@ const EmployeeProfile = (props: Props) => {
 
   const deleteEmployee = async () =>{
     await deleteEmployeeById(employeeId!); 
+    navigate("/employee");
   }
 
   return (
@@ -54,7 +56,7 @@ const EmployeeProfile = (props: Props) => {
                 <a href="#x" className="btn btn-xs btn-linkedin btn-circle btn-icon mr-5 mb-0"><FaLinkedin /></a>
               </p>
             </div>
-            <a onClick={deleteEmployee} href='/employee' type="button" className="btn btn-outline-danger">Delete Employee</a>
+            <input value="Delete Value" onClick={deleteEmployee} type="button" className="btn btn-outline-danger"/>
           </div>
         </div>
 
