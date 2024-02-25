@@ -2,19 +2,18 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import './SignInPage.css'
 import { useNavigate, useOutletContext } from 'react-router'
-import { User } from '../../db';
+import { AuthRequest, AuthResponse, User } from '../../db';
 import { useState } from 'react';
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
-import { authorize, signIn } from '../../services/AuthorizationService';
-
-type Props = {}
+import { getAccessToken, getMe, getRefreshToken, signIn } from '../../services/AuthorizationService';
 
 interface OuterContext {
-  setUser: (user: User) => void,
+  setIsSignIn: (data: boolean) => void
 }
+type Props = {}
 
 const SignInPage = (props: Props) => {
-  const { setUser }: OuterContext = useOutletContext();
+  const { setIsSignIn }: OuterContext = useOutletContext();
   const [isLoading, setIsLoading] = useState<boolean>();
   const [serverError, setServerError] = useState<string>();
   const navigate = useNavigate();
@@ -24,18 +23,16 @@ const SignInPage = (props: Props) => {
     setIsLoading(true);
     const form = new FormData(e.target as HTMLFormElement);
 
-    const body = {
+    const authRequest: AuthRequest = {
       email: form.get("email") as string,
       password: form.get("password") as string
     }
 
     try {
-      await signIn(body);
-      const result = await authorize();
-      const user: User = result?.data.data;
-      localStorage.setItem("user", JSON.stringify(user));
-
-      setUser(user);
+      const result = (await signIn(authRequest)).data.data;
+      const refreshToken: string = result.refreshToken;
+      localStorage.setItem("refreshToken", refreshToken);
+      setIsSignIn(true);
       navigate(`/employee?page=${0}`);
     }
     catch (error: any) {

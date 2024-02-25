@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { deleteEmployeeById, getAllEmployees, getEmployeeById } from '../../services/EmployeeService';
+import { deleteEmployeeById, getEmployeeById } from '../../services/EmployeeService';
 import { Employee } from '../../db';
-import Footer from '../../components/Footer/Footer';
-import EmployeeCard from '../../components/Cards/EmployeeCard/EmployeeCard';
 import { FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa';
 import './EmployeeProfile.css'
 import { useNavigate, useParams } from 'react-router';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -16,16 +15,25 @@ const EmployeeProfile = (props: Props) => {
   const [date, setDate] = useState<Date | null>(null);
 
   useEffect(() => {
-    const getEmployee = async () => {
-      const result = await getEmployeeById(employeeId!);
-      setEmployee(result?.data.data);
-      setDate(new Date(result?.data.data.hiringDate!));
+    if (!getRefreshToken())
+      navigate(`sign-in`)
+    else {
+      getEmployees();
     }
-    getEmployee();
   }, []);
 
+  const getEmployees = async () => {
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const result = await getEmployeeById(employeeId!, accessToken);
+    setEmployee(result?.data.data);
+    setDate(new Date(result?.data.data.hiringDate!));
+  }
+
   const deleteEmployee = async () =>{
-    await deleteEmployeeById(employeeId!); 
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    await deleteEmployeeById(employeeId!, accessToken); 
     navigate("/employee");
   }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Country } from '../../db'
 import { getAllCountries } from '../../services/CountryService';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -9,12 +10,15 @@ const CountriesPage = (props: Props) => {
   const [serverError, setServerError] = useState<string>("");
 
   useEffect(() => {
-    const getCountries = async () => {
-      const result = await getAllCountries();
-      typeof result !== "string" ? setCountries(result.data.data) : setServerError(result);
-    }
     getCountries()
   }, []);
+
+  const getCountries = async () => {
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const result = await getAllCountries(accessToken);
+    typeof result !== "string" ? setCountries(result.data.data) : setServerError(result);
+  }
 
   return (
     <div className='container'>

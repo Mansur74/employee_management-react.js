@@ -1,13 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { User } from '../../db';
+import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
 
 interface Props {
-  user: User,
-  handleSignOut: () => void
+  isSignIn: boolean,
+  setIsSignIn: (data: boolean) => void
 }
-const Navbar = ({ user, handleSignOut }: Props) => {
+const Navbar = ({isSignIn, setIsSignIn}: Props) => {
+  const [user, setUser] = useState<User | null>();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if(getRefreshToken()) {
+      setIsSignIn(true);
+      getUser(); 
+    } 
+    else {
+      setIsSignIn(false);
+      setUser(null);
+    }
+  },[]);
+  
+  const getUser = async () => {
+    const refreshToken = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const user = (await getMe(accessToken)).data.data;
+    setUser(user);
+  }
+
+  const signOut = async () => {
+    localStorage.removeItem("refreshToken");
+    sessionStorage.removeItem("refreshToken");
+    setUser(null);
+    setIsSignIn(false);
+    navigate("/sign-in")
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
@@ -19,7 +47,7 @@ const Navbar = ({ user, handleSignOut }: Props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           {
-            user &&
+            isSignIn &&
             <ul className="navbar-nav">
               <li className="nav-item">
                 <a className="nav-link active" href={`/employee?page=${0}`}>Employees</a>
@@ -39,13 +67,13 @@ const Navbar = ({ user, handleSignOut }: Props) => {
           }
 
           {
-            user ?
+            isSignIn ?
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <Link className="nav-link active" to="/user/profile">Profile</Link>
                 </li>
                 <li className="nav-item">
-                  <input type='button' value="Sign Out" onClick={handleSignOut} className="nav-link active" />
+                  <input type='button' value="Sign Out" onClick={signOut} className="nav-link active" />
                 </li>
               </ul> :
               <ul className="navbar-nav ms-auto">

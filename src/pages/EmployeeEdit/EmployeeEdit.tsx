@@ -3,6 +3,7 @@ import { getEmployeeById, updateEmployeeById } from '../../services/EmployeeServ
 import { useParams } from 'react-router';
 import { Employee } from '../../db';
 import { useNavigate } from 'react-router-dom';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -12,12 +13,19 @@ const EmployeeEdit = (props: Props) => {
   const [employee, setEmployee] = useState<Employee>();
 
   useEffect(() => {
-    const getEmployee = async () => {
-      const result = await getEmployeeById(employeeId!);
-      setEmployee(result?.data.data!);
-    }
+    if (!getRefreshToken())
+    navigate(`http://localhost:8080/api/authorization/sign-in`)
+  else {
     getEmployee();
+  }
   }, []);
+
+  const getEmployee = async () => {
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const result = await getEmployeeById(employeeId!, accessToken);
+    setEmployee(result?.data.data!);
+  }
 
   const handleUpdateEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +42,9 @@ const EmployeeEdit = (props: Props) => {
       imgURL: data.get("imgURL") as string
     }
 
-    await updateEmployeeById(employeeId!, body);
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    await updateEmployeeById(employeeId!, body, accessToken);
     navigate(`/employee/${employeeId}`);
   }
   

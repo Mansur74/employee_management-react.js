@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Passport } from '../../db';
 import { getPassportById } from '../../services/PassportService';
 import CountryCard from '../../components/Cards/CountryCard/CountryCard';
 import { getEmployeeById } from '../../services/EmployeeService';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -12,15 +13,23 @@ const PassportProfile = (props: Props) => {
   const { employeeId } = useParams();
   const [passport, setPassport] = useState<Passport>();
   const [date, setDate] = useState<Date | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getPassport = async () => {
-      const result = await getEmployeeById(employeeId!);
-      setPassport(result?.data.data.passport!);
-      setDate(new Date(result?.data.data.passport?.validDate!));
-    }
-    getPassport();
+    if (!getRefreshToken())
+			navigate(`http://localhost:8080/api/authorization/sign-in`)
+		else {
+			getPassport();
+		}
   }, []);
+
+  const getPassport = async () => {
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const result = await getEmployeeById(employeeId!, accessToken);
+    setPassport(result?.data.data.passport!);
+    setDate(new Date(result?.data.data.passport?.validDate!));
+  }
 
   return (
     <div>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { authorize } from '../../services/AuthorizationService'
 import { User } from '../../db';
 import './ProfilePage.css'
 import { FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
+import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -23,7 +23,9 @@ const ProfilePage = (props: Props) => {
     if (user)
     {
       try {
-        const result = await authorize();
+        const refreshToken: string = getRefreshToken()!;
+        const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+        const result = await getMe(accessToken);
         setUser(result.data.data);
       } catch (error: any) {
 
@@ -35,7 +37,11 @@ const ProfilePage = (props: Props) => {
   }
 
   useEffect(() => {
-    getUser();
+    if (!getRefreshToken())
+      navigate(`http://localhost:8080/api/authorization/sign-in`)
+    else {
+      getUser();
+    }
   }, []);
 
   return (

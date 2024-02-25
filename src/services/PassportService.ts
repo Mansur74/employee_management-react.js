@@ -2,8 +2,7 @@ import axios from "axios";
 import { DataResult, Passport } from "../db";
 import { getAccessToken } from "./AuthorizationService";
 
-export const getPassportById = async (id: string) => {
-  const accessToken = (await getAccessToken()).data.accessToken;
+export const getPassportById = async (id: string, accessToken: string) => {
   const result = await axios.get<DataResult<Passport>>(`http://localhost:8080/api/passport/${id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
@@ -12,8 +11,7 @@ export const getPassportById = async (id: string) => {
   return result;
 }
 
-export const createPassport = async (employeeId: string, passport: Passport) => {
-  const accessToken = (await getAccessToken()).data.accessToken;
+export const createPassport = async (employeeId: string, passport: Passport, accessToken: string) => {
   const result = await axios.post<DataResult<Passport>>(`http://localhost:8080/api/employee/${employeeId}`, passport, {
     headers: {
       Authorization: `Bearer ${accessToken}`
@@ -22,8 +20,7 @@ export const createPassport = async (employeeId: string, passport: Passport) => 
   return result;
 }
 
-export const updatePassportById = async (passportId: string, passport: Passport) => {
-  const accessToken = (await getAccessToken()).data.accessToken;
+export const updatePassportById = async (passportId: string, passport: Passport, accessToken: string) => {
   const result = await axios.patch<DataResult<Passport>>(`http://localhost:8080/api/passport/${passportId}`, passport, {
     headers: {
       Authorization: `Bearer ${accessToken}`

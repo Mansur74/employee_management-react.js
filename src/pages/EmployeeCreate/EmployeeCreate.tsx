@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Employee } from '../../db';
 import { createEmployee } from '../../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
 const CreateEmployeePage = (props: Props) => {
+  
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!getRefreshToken())
+      navigate(`http://localhost:8080/api/authorization/sign-in`)
+  }, []);
+
   const handleCreateEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.target as HTMLFormElement);
@@ -23,7 +31,9 @@ const CreateEmployeePage = (props: Props) => {
       imgURL: data.get("imgURL") as string
     }
 
-    await createEmployee(body);
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    await createEmployee(body, accessToken);
     navigate(`/employee?page=${0}`);
   }
 

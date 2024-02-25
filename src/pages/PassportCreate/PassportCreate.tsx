@@ -3,6 +3,7 @@ import { getAllCountries } from '../../services/CountryService';
 import { Country, Passport } from '../../db';
 import { createPassport } from '../../services/PassportService';
 import { useNavigate, useParams } from 'react-router';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 type Props = {}
 
 const PassportCreate = (props: Props) => {
@@ -13,12 +14,19 @@ const PassportCreate = (props: Props) => {
   const [countries, setCountries] = useState<Country[]>([]);
 
   useEffect(() => {
-    const getCountries = async () => {
-      const result = await getAllCountries();
-       setCountries(result.data.data);
-    };
-    getCountries();
+    if (!getRefreshToken())
+			navigate(`http://localhost:8080/api/authorization/sign-in`)
+		else {
+      getCountries();
+    }
   }, []);
+
+  const getCountries = async () => {
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const result = await getAllCountries(accessToken);
+     setCountries(result.data.data);
+  };
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {    
     e.preventDefault();
@@ -36,7 +44,9 @@ const PassportCreate = (props: Props) => {
       countries: validCountries
     }
     
-    await createPassport(employeeId!, passport);
+    const refreshToken: string = getRefreshToken()!;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    await createPassport(employeeId!, passport, accessToken);
     navigate(`/employee/${employeeId}/passport`);
   }
 

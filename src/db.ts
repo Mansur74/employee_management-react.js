@@ -38,6 +38,11 @@ export interface User {
   roles?: Role[]
 }
 
+export interface AuthRequest {
+  email?: string,
+  password?: string
+}
+
 export interface Role {
   id?: number,
   name?: string
@@ -61,7 +66,13 @@ export interface Result{
   message: string,
 }
 
-export interface Token {
+export interface AuthResponse {
   accessToken: string,
   refreshToken: string
+}
+export interface RefreshToken {
+  refreshToken: string
+}
+export interface AccessToken {
+  accessToken: string
 }

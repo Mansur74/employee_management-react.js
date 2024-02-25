@@ -1,30 +1,26 @@
+import { AccessToken, AuthRequest, RefreshToken } from './../db';
 import axios from "axios"
-import { DataResult, Result, Token, User } from "../db";
+import { DataResult, Result, AuthResponse, User } from "../db";
 
 export const signUp = async (user: User) => {
   const result = await axios.post<DataResult<string>>("http://localhost:8080/api/authorization/sign-up", user);
   return result;
 }
 
-export const signIn = async (user: any) => {
-  const result = await axios.post<DataResult<Token>>("http://localhost:8080/api/authorization/sign-in", user);
-  result.data && localStorage.setItem("refreshToken", result.data.data.refreshToken);
+export const signIn = async (authRequst: AuthRequest) => {
+  const result = await axios.post<DataResult<AuthResponse>>("http://localhost:8080/api/authorization/sign-in", authRequst);
   return result;
 }
 
-export const getAccessToken = async () => {
-  const refreshToken = localStorage.getItem("refreshToken");
-  const result = await axios.get<DataResult<{accessToken: string}>>("http://localhost:8080/api/authorization/accessToken", {
-    headers: {
-      Authorization: `Bearer ${refreshToken}`,
-    }
-  });
-  return result.data;
+export const getAccessToken = async (refreshToken: string) => {
+  const body: RefreshToken = {refreshToken: refreshToken};
+  const result = await axios.post<DataResult<{accessToken: string}>>("http://localhost:8080/api/authorization/accessToken", body);
+  return result;
 }
 
-export const authorize = async () => {
-  const accessToken = (await getAccessToken()).data.accessToken;
-  const result = await axios.get<DataResult<User>>("http://localhost:8080/api/authorization/authorize", {
+
+export const getMe = async (accessToken: string) => {
+  const result = await axios.get<DataResult<User>>("http://localhost:8080/api/authorization/me", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     }
@@ -41,5 +37,16 @@ export const logout = async () => {
     }
   });
   return result;
+}
+
+export const getRefreshToken = () =>
+{
+  const local: string | null = localStorage.getItem("refreshToken");
+  const session: string | null = sessionStorage.getItem("refreshToken")!;
+  if(local)
+    return local;
+  else if(session)
+    return session;
+  return null;
 }
 

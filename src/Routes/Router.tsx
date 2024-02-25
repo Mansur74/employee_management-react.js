@@ -13,12 +13,17 @@ import SignInPage from '../pages/SignInPage/SignInPage';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import ProfileEdit from '../pages/ProfileEdit/ProfileEdit';
+import ErrorPage from '../pages/ErrorPage/ErrorPage';
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout/>,
     children: [
+      {
+        path: "*",
+        element: <ErrorPage/>
+      },
       { 
         path: "", 
         element: <EmployeesPage/>
