@@ -3,7 +3,7 @@ import { Country, DataResult } from "../db";
 import { getAccessToken } from "./AuthorizationService";
 
 export const getAllCountries = async (accessToken: string) => {
-  const result = axios.get<DataResult<Country[]>>("http://localhost:8080/api/country", {
+  const result = axios.get<DataResult<Country[]>>("http://localhost:8080/api/countries", {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { Employee } from '../../db';
+import { Employee, User } from '../../db';
 import { createEmployee } from '../../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
+import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -13,7 +13,7 @@ const CreateEmployeePage = (props: Props) => {
 
   useEffect(() => {
     if (!getRefreshToken())
-      navigate(`http://localhost:8080/api/authorization/sign-in`)
+      navigate(`/sign-in`)
   }, []);
 
   const handleCreateEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,8 +32,10 @@ const CreateEmployeePage = (props: Props) => {
     }
 
     const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await createEmployee(body, accessToken);
+    let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const user: User = (await getMe(accessToken)).data.data;
+    accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    await createEmployee(body, user.id! ,accessToken);
     navigate(`/employee?page=${0}`);
   }
 

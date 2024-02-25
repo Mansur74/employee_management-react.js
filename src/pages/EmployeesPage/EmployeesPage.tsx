@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import EmployeeCard from '../../components/Cards/EmployeeCard/EmployeeCard'
 import Footer from '../../components/Footer/Footer'
-import { getAllEmployees } from '../../services/EmployeeService'
+import { getAllEmployees, getEmployeesByUserId } from '../../services/EmployeeService'
 import { Employee, User } from "../../db"
 import { useLocation, useNavigate, useOutletContext } from 'react-router'
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner'
-import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService'
+import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService'
 
 type Props = {}
 
@@ -34,13 +34,13 @@ const EmployeesPage = (props: Props) => {
   const getEmployees = async () => {
     setIsLoading(true);
     const refreshToken: string = getRefreshToken()!;
-    console.log(refreshToken)
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-
+    let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const user: User = (await getMe(accessToken)).data.data;
+    accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
     if (accessToken) {
       try {
         const page = params.get("page") ? parseInt(params.get("page")!) : 0;
-        const result = await getAllEmployees(page, size, accessToken);
+        const result = await getEmployeesByUserId(page, size, user.id!, accessToken);
         setPage(page);
         setEmployees(result.data.data.rows);
         setFiteredEmployees(result.data.data.rows);

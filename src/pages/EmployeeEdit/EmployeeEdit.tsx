@@ -14,10 +14,10 @@ const EmployeeEdit = (props: Props) => {
 
   useEffect(() => {
     if (!getRefreshToken())
-    navigate(`http://localhost:8080/api/authorization/sign-in`)
-  else {
-    getEmployee();
-  }
+      navigate(`/sign-in`)
+    else {
+      getEmployee();
+    }
   }, []);
 
   const getEmployee = async () => {
@@ -30,7 +30,7 @@ const EmployeeEdit = (props: Props) => {
   const handleUpdateEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.target as HTMLFormElement);
-    const body : Employee = {
+    const body: Employee = {
       firstName: data.get("firstName") as string,
       lastName: data.get("lastName") as string,
       gender: data.get("gender") as string,
@@ -47,7 +47,7 @@ const EmployeeEdit = (props: Props) => {
     await updateEmployeeById(employeeId!, body, accessToken);
     navigate(`/employee/${employeeId}`);
   }
-  
+
 
   return (
     <div className='container ps-5 pe-5'>
@@ -58,11 +58,11 @@ const EmployeeEdit = (props: Props) => {
         </div>
         <div className="mb-3">
           <label htmlFor="lastName" className="form-label">Lastname</label>
-          <input type="text" name='lastName' defaultValue={employee?.lastName}className="form-control" id="lastName" aria-describedby="lastName" />
+          <input type="text" name='lastName' defaultValue={employee?.lastName} className="form-control" id="lastName" aria-describedby="lastName" />
         </div>
         <div className="mb-3">
           <label htmlFor="gender" className="form-label">Gender</label>
-          <input type="text" name='gender' defaultValue={employee?.gender}className="form-control" id="gender" aria-describedby="gender" />
+          <input type="text" name='gender' defaultValue={employee?.gender} className="form-control" id="gender" aria-describedby="gender" />
         </div>
         <div className="mb-3">
           <label htmlFor="age" className="form-label">Age</label>

@@ -2,17 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { Country } from '../../db'
 import { getAllCountries } from '../../services/CountryService';
 import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
+import { useNavigate } from 'react-router';
 
 type Props = {}
 
 const CountriesPage = (props: Props) => {
+  const navigate = useNavigate();
   const [countries, setCountries] = useState<Country[]>([]);
   const [serverError, setServerError] = useState<string>("");
 
   useEffect(() => {
-    getCountries()
+    if (!getRefreshToken())
+      navigate(`/sign-in`)
+    else {
+      getCountries();
+    }
   }, []);
-
+  
   const getCountries = async () => {
     const refreshToken: string = getRefreshToken()!;
     const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;

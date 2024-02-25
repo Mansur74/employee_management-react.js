@@ -19,7 +19,7 @@ const ProfileEdit = (props: Props) => {
 
 	useEffect(() => {
 		if (!getRefreshToken())
-			navigate(`http://localhost:8080/api/authorization/sign-in`)
+			navigate(`/sign-in`)
 		else {
 			getUser();
 		}

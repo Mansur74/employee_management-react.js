@@ -16,7 +16,7 @@ const EmployeeProfile = (props: Props) => {
 
   useEffect(() => {
     if (!getRefreshToken())
-      navigate(`sign-in`)
+      navigate(`/sign-in`)
     else {
       getEmployees();
     }

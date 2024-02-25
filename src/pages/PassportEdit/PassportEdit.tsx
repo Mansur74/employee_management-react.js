@@ -17,7 +17,7 @@ const PassportEdit = (props: Props) => {
 
   useEffect(() => {
     if (!getRefreshToken())
-			navigate(`http://localhost:8080/api/authorization/sign-in`)
+			navigate(`/sign-in`)
 		else {
 			getCountries();
 		}
@@ -27,8 +27,10 @@ const PassportEdit = (props: Props) => {
     const refreshToken: string = getRefreshToken()!;
     let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
     const resultCountries = await getAllCountries(accessToken);
+
     accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
     const resultEmployee = await getEmployeeById(employeeId!, accessToken!);
+    
     setCountries(resultCountries.data.data);
     setPassport(resultEmployee?.data.data.passport!);
   };

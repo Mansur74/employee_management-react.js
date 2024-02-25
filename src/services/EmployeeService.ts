@@ -11,6 +11,15 @@ export const getAllEmployees = async (page: number, size: number, accessToken: s
   return result;
 }
 
+export const getEmployeesByUserId = async (page: number, size: number, userId: number, accessToken: string) => {
+  const result = await axios.get<DataResult<EmployeePage>>(`http://localhost:8080/api/user/${userId}/employees?page=${page}&&size=${size}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
+}
+
 export const getEmployeeById = async (id: string, accessToken: string) => {
   const result = await axios.get<DataResult<Employee>>(`http://localhost:8080/api/employee/${id}`, {
     headers: {
@@ -21,8 +30,8 @@ export const getEmployeeById = async (id: string, accessToken: string) => {
 
 }
 
-export const createEmployee = async (employee: Employee, accessToken: string) => {
-  const result = await axios.post<DataResult<Employee>>(`http://localhost:8080/api/employee`, employee, {
+export const createEmployee = async (employee: Employee, userId: number, accessToken: string) => {
+  const result = await axios.post<DataResult<Employee>>(`http://localhost:8080/api/user/${userId}/employee`, employee, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }
@@ -31,7 +40,7 @@ export const createEmployee = async (employee: Employee, accessToken: string) =>
 }
 
 export const updateEmployeeById = async (id: string, employee: Employee, accessToken: string) => {
-  const result = await axios.patch<DataResult<Employee>>(`http://localhost:8080/api/employee/${id}`, employee, {
+  const result = await axios.put<DataResult<Employee>>(`http://localhost:8080/api/employee/${id}`, employee, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }

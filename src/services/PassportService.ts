@@ -21,7 +21,7 @@ export const createPassport = async (employeeId: string, passport: Passport, acc
 }
 
 export const updatePassportById = async (passportId: string, passport: Passport, accessToken: string) => {
-  const result = await axios.patch<DataResult<Passport>>(`http://localhost:8080/api/passport/${passportId}`, passport, {
+  const result = await axios.put<DataResult<Passport>>(`http://localhost:8080/api/passport/${passportId}`, passport, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }

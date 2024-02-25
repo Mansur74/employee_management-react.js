@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import './SignInPage.css'
 import { useNavigate, useOutletContext } from 'react-router'
-import { AuthRequest, AuthResponse, User } from '../../db';
+import { AuthRequest, AuthResponse, Result, User } from '../../db';
 import { useState } from 'react';
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
 import { getAccessToken, getMe, getRefreshToken, signIn } from '../../services/AuthorizationService';
+import axios from 'axios';
 
 interface OuterContext {
   setIsSignIn: (data: boolean) => void
@@ -16,6 +17,7 @@ const SignInPage = (props: Props) => {
   const { setIsSignIn }: OuterContext = useOutletContext();
   const [isLoading, setIsLoading] = useState<boolean>();
   const [serverError, setServerError] = useState<string>();
+  const [isRemember, setIsRemember] = useState<boolean>() ;
   const navigate = useNavigate();
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,12 +33,16 @@ const SignInPage = (props: Props) => {
     try {
       const result = (await signIn(authRequest)).data.data;
       const refreshToken: string = result.refreshToken;
-      localStorage.setItem("refreshToken", refreshToken);
+      isRemember ? localStorage.setItem("refreshToken", refreshToken) : sessionStorage.setItem("refreshToken", refreshToken);
       setIsSignIn(true);
       navigate(`/employee?page=${0}`);
     }
     catch (error: any) {
-      setServerError(error.message)
+      if(axios.isAxiosError(error)){
+        const result: Result = error.response?.data;
+        setServerError(result.message);
+      }   
+
     }
 
     setIsLoading(false);
@@ -71,7 +77,7 @@ const SignInPage = (props: Props) => {
                 }
 
                 <div className="form-check text-start my-3">
-                  <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />
+                  <input className="form-check-input" type="checkbox" checked={isRemember} onChange={(event) => setIsRemember(event.target.checked)} id="flexCheckDefault" />
                   <label className="form-check-label" htmlFor="flexCheckDefault">
                     Remember me
                   </label>

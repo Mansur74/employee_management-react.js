@@ -20,7 +20,7 @@ const Navbar = ({isSignIn, setIsSignIn}: Props) => {
       setIsSignIn(false);
       setUser(null);
     }
-  },[]);
+  },[isSignIn]);
   
   const getUser = async () => {
     const refreshToken = getRefreshToken()!;
