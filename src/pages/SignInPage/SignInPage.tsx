@@ -84,7 +84,7 @@ const SignInPage = (props: Props) => {
                 </div>
                 <button className="btn btn-primary w-100 py-2 mb-3" type="submit">Sign in</button>
                 <span className="mt-3">Do you don't have an account? <Link to="/sign-up">Sign Up</Link></span>
-                <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
+                <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
               </form>
             </div>
             <Footer />

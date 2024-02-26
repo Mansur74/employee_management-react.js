@@ -125,10 +125,10 @@ const EmployeesPage = (props: Props) => {
             </div>:
             <div className="d-flex align-items-center justify-content-center">
             <div className="text-center">
-              <h1 className="display-3 fw-bold">204</h1>
-              <p className="fs-5"> <span className="text-danger">Opps!</span> No content</p>
+
+              <p className="fs-5"> <span className="text-danger">No Content</span></p>
               <p className="lead fs-6">
-                The page doesn't have a content.
+              Employee does not exist
               </p>
             </div>
           </div>

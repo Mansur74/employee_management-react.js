@@ -8,7 +8,7 @@ const Footer = (props: Props) => {
       <div className="row">
         <div className="col-12 col-md">
           <img className="mb-2" src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="24" height="19" />
-          <small className="d-block mb-3 text-muted">&copy; 2017–2021</small>
+          <small className="d-block mb-3 text-muted">&copy; 2017–2024</small>
         </div>
         <div className="col-6 col-md">
           <h5>Features</h5>

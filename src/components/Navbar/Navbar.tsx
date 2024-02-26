@@ -7,21 +7,21 @@ interface Props {
   isSignIn: boolean,
   setIsSignIn: (data: boolean) => void
 }
-const Navbar = ({isSignIn, setIsSignIn}: Props) => {
+const Navbar = ({ isSignIn, setIsSignIn }: Props) => {
   const [user, setUser] = useState<User | null>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(getRefreshToken()) {
+    if (getRefreshToken()) {
       setIsSignIn(true);
-      getUser(); 
-    } 
+      getUser();
+    }
     else {
       setIsSignIn(false);
       setUser(null);
     }
-  },[isSignIn]);
-  
+  }, [isSignIn]);
+
   const getUser = async () => {
     const refreshToken = getRefreshToken()!;
     const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
@@ -69,12 +69,16 @@ const Navbar = ({isSignIn, setIsSignIn}: Props) => {
           {
             isSignIn ?
               <ul className="navbar-nav ms-auto">
-                <li className="nav-item">
-                  <Link className="nav-link active" to="/user/profile">Profile</Link>
+                <li className="nav-item dropdown">
+                  <a className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="rounded-circle avatar-sm img-thumbnail" alt="profile-image" />
+                  </a>
+                  <ul className="dropdown-menu dropdown-menu-end">
+                    <Link className="dropdown-item" to="/user/profile">Profile</Link>
+                    <Link className="dropdown-item" to="/user/profile">Settings</Link>
+                  </ul>
                 </li>
-                <li className="nav-item">
-                  <input type='button' value="Sign Out" onClick={signOut} className="nav-link active" />
-                </li>
+
               </ul> :
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
