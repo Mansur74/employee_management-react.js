@@ -36,6 +36,16 @@ export interface User {
   email?: string,
   password?: string,
   roles?: Role[]
+  userDetail?: UserDetail
+}
+
+export interface UserDetail {
+  id?: number,
+  gender?: string,
+  birthdate?: string,
+  location?: string,
+  phoneNumber?: string
+  imgURL?: string
 }
 
 export interface AuthRequest {

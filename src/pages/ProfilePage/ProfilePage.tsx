@@ -70,7 +70,7 @@ const ProfilePage = (props: Props) => {
               </p>
               <p className="text-muted mb-2 font-13"><strong>Full Name :</strong><span className="ms-2">{user?.firstName} {user?.lastName}</span></p>
 
-              <p className="text-muted mb-2 font-13"><strong>Mobile :</strong><span className="ms-2">(123) 123 1234</span></p>
+              <p className="text-muted mb-2 font-13"><strong>Mobile :</strong><span className="ms-2">{user.userDetail?.phoneNumber}</span></p>
 
               <p className="text-muted mb-2 font-13"><strong>Email :</strong><span className="ms-2">{user?.email}</span></p>
 

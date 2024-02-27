@@ -7,7 +7,7 @@ import { FaUserEdit, FaEdit } from 'react-icons/fa';
 import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 import { Employee, User } from '../../db';
-import { getEmployeeById } from '../../services/EmployeeService';
+import { getMyEmployeeById } from '../../services/EmployeeService';
 import CardSpinner from '../Spinner/CardSpinner/CardSpinner';
 import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
 
@@ -33,7 +33,7 @@ const DashBoard = (props: Props) => {
     setIsLoading(true);
     const refreshToken: string = getRefreshToken()!;
     const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getEmployeeById(employeeId!, accessToken);
+    const result = await getMyEmployeeById(employeeId!, accessToken);
     setEmployee(result?.data.data);
     setIsLoading(false);
   }

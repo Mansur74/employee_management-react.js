@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { deleteEmployeeById, getEmployeeById } from '../../services/EmployeeService';
+import { deleteMyEmployeeById, getMyEmployeeById } from '../../services/EmployeeService';
 import { Employee } from '../../db';
 import { FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa';
 import './EmployeeProfile.css'
@@ -25,7 +25,7 @@ const EmployeeProfile = (props: Props) => {
   const getEmployees = async () => {
     const refreshToken: string = getRefreshToken()!;
     const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getEmployeeById(employeeId!, accessToken);
+    const result = await getMyEmployeeById(employeeId!, accessToken);
     setEmployee(result?.data.data);
     setDate(new Date(result?.data.data.hiringDate!));
   }
@@ -33,7 +33,7 @@ const EmployeeProfile = (props: Props) => {
   const deleteEmployee = async () =>{
     const refreshToken: string = getRefreshToken()!;
     const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await deleteEmployeeById(employeeId!, accessToken); 
+    await deleteMyEmployeeById(employeeId!, accessToken); 
     navigate("/employee");
   }
 

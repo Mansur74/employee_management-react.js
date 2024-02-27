@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import EmployeeCard from '../../components/Cards/EmployeeCard/EmployeeCard'
 import Footer from '../../components/Footer/Footer'
-import { getAllEmployees, getEmployeesByUserId } from '../../services/EmployeeService'
-import { Employee, User } from "../../db"
+import { getMyEmployees } from '../../services/EmployeeService'
+import { Employee } from "../../db"
 import { useLocation, useNavigate, useOutletContext } from 'react-router'
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner'
 import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService'
@@ -34,13 +34,11 @@ const EmployeesPage = (props: Props) => {
   const getEmployees = async () => {
     setIsLoading(true);
     const refreshToken: string = getRefreshToken()!;
-    let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const user: User = (await getMe(accessToken)).data.data;
-    accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
     if (accessToken) {
       try {
         const page = params.get("page") ? parseInt(params.get("page")!) : 0;
-        const result = await getEmployeesByUserId(page, size, user.id!, accessToken);
+        const result = await getMyEmployees(page, size, accessToken);
         setPage(page);
         setEmployees(result.data.data.rows);
         setFiteredEmployees(result.data.data.rows);

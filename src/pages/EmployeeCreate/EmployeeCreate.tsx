@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Employee, User } from '../../db';
-import { createEmployee } from '../../services/EmployeeService';
+import { createMyEmployee } from '../../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
@@ -35,7 +35,7 @@ const CreateEmployeePage = (props: Props) => {
     let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
     const user: User = (await getMe(accessToken)).data.data;
     accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await createEmployee(body, user.id! ,accessToken);
+    await createMyEmployee(body, accessToken);
     navigate(`/employee?page=${0}`);
   }
 

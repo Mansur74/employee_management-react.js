@@ -90,7 +90,7 @@ const ProfileEdit = (props: Props) => {
 
 									<div className="col-md-6">
 										<label className="small mb-1" htmlFor="inputPhone">Phone number</label>
-										<input className="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" />
+										<input className="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value={user?.userDetail?.phoneNumber} />
 									</div>
 
 									<div className="col-md-6">

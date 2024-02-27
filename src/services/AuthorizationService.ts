@@ -3,7 +3,7 @@ import axios from "axios"
 import { DataResult, Result, AuthResponse, User } from "../db";
 
 export const signUp = async (user: User) => {
-  const result = await axios.post<DataResult<string>>("http://localhost:8080/api/authorization/sign-up", user);
+  const result = await axios.post<Result>("http://localhost:8080/api/authorization/sign-up", user);
   return result;
 }
 
@@ -29,7 +29,6 @@ export const getMe = async (accessToken: string) => {
 }
 
 export const logout = async () => {
-  localStorage.removeItem("user");
   const accessToken = localStorage.getItem("refreshToken");
   const result = await axios.delete<Result>("http://localhost:8080/api/authorization/logout", {
     headers: {

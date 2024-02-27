@@ -3,7 +3,7 @@ import { getAllCountries } from '../../services/CountryService';
 import { Country, Passport } from '../../db';
 import { useNavigate, useParams } from 'react-router';
 import { getPassportById, updatePassportById } from '../../services/PassportService';
-import { getEmployeeById } from '../../services/EmployeeService';
+import { getMyEmployeeById } from '../../services/EmployeeService';
 import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
@@ -29,7 +29,7 @@ const PassportEdit = (props: Props) => {
     const resultCountries = await getAllCountries(accessToken);
 
     accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const resultEmployee = await getEmployeeById(employeeId!, accessToken!);
+    const resultEmployee = await getMyEmployeeById(employeeId!, accessToken!);
     
     setCountries(resultCountries.data.data);
     setPassport(resultEmployee?.data.data.passport!);

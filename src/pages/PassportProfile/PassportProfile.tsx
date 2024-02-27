@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router';
 import { Passport } from '../../db';
-import { getPassportById } from '../../services/PassportService';
 import CountryCard from '../../components/Cards/CountryCard/CountryCard';
-import { getEmployeeById } from '../../services/EmployeeService';
+import { getMyEmployeeById } from '../../services/EmployeeService';
 import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
@@ -26,7 +25,7 @@ const PassportProfile = (props: Props) => {
   const getPassport = async () => {
     const refreshToken: string = getRefreshToken()!;
     const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getEmployeeById(employeeId!, accessToken);
+    const result = await getMyEmployeeById(employeeId!, accessToken);
     setPassport(result?.data.data.passport!);
     setDate(new Date(result?.data.data.passport?.validDate!));
   }

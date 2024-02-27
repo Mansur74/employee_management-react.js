@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User } from '../../db';
 import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
+import { CiSettings, CiLogout } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
 
 interface Props {
   isSignIn: boolean,
@@ -74,8 +76,9 @@ const Navbar = ({ isSignIn, setIsSignIn }: Props) => {
                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="rounded-circle avatar-sm img-thumbnail" alt="profile-image" />
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
-                    <Link className="dropdown-item" to="/user/profile">Profile</Link>
-                    <Link className="dropdown-item" to="/user/profile">Settings</Link>
+                    <Link className="dropdown-item" to="/user/profile"><CgProfile/> Profile</Link>
+                    <Link className="dropdown-item" to="/user/profile"><CiSettings/> Settings</Link>
+                    <button type='button' className="dropdown-item" onClick={signOut}><CiLogout/> Logout</button>
                   </ul>
                 </li>
 
