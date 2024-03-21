@@ -8,3 +8,12 @@ export const createMyUserDetail = async (userDetail: UserDetail, accessToken: st
   });
   return result;
 }
+
+export const updateMyUserDetail = async (userDetailId: number, userDetail: UserDetail, accessToken: string) =>  {
+  const result = await axios.put<DataResult<UserDetail>>(`http://localhost:8080/api/my/userDetail/${userDetailId}`, userDetail, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return result;
+}

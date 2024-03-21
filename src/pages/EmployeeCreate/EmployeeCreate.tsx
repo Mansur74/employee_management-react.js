@@ -32,9 +32,7 @@ const CreateEmployeePage = (props: Props) => {
     }
 
     const refreshToken: string = getRefreshToken()!;
-    let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const user: User = (await getMe(accessToken)).data.data;
-    accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
+    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
     await createMyEmployee(body, accessToken);
     navigate(`/employee?page=${0}`);
   }

@@ -44,7 +44,7 @@ export interface UserDetail {
   gender?: string,
   birthdate?: string,
   location?: string,
-  phoneNumber?: string
+  phoneNumber?: number
   imgURL?: string
 }
 

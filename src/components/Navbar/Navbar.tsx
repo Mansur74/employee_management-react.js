@@ -73,7 +73,7 @@ const Navbar = ({ isSignIn, setIsSignIn }: Props) => {
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item dropdown">
                   <a className="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="rounded-circle avatar-sm img-thumbnail" alt="profile-image" />
+                    <img src={user?.userDetail?.imgURL ? user?.userDetail?.imgURL : "https://bootdey.com/img/Content/avatar/avatar1.png"} className="rounded-circle avatar-sm img-thumbnail" alt="profile-image" />
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <Link className="dropdown-item" to="/user/profile"><CgProfile/> Profile</Link>
