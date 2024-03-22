@@ -72,12 +72,6 @@ const SignUpPage = (props: Props) => {
                   <label htmlFor="password">Password</label>
                 </div>
 
-                <div className="form-check text-start my-3">
-                  <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" />
-                  <label className="form-check-label" htmlFor="flexCheckDefault">
-                    Remember me
-                  </label>
-                </div>
                 <button className="btn btn-primary w-100 py-2 mb-3" type="submit">Sign Up</button>
                 <span className="mt-3">Do you have an account? <Link to="/sign-in">Sign In</Link></span>
                 <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>

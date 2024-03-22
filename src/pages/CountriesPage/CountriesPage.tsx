@@ -10,6 +10,7 @@ const CountriesPage = (props: Props) => {
   const navigate = useNavigate();
   const [countries, setCountries] = useState<Country[]>([]);
   const [serverError, setServerError] = useState<string>("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     if (!getRefreshToken())
@@ -24,6 +25,10 @@ const CountriesPage = (props: Props) => {
     const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
     const result = await getAllCountries(accessToken);
     typeof result !== "string" ? setCountries(result.data.data) : setServerError(result);
+  }
+
+  const updateCountry = async () => {
+    updateCountry();
   }
 
   return (
@@ -48,12 +53,12 @@ const CountriesPage = (props: Props) => {
               <tr key={country.id}>
                 <td><img height="100px" width="175px" src={country.imgURL}></img></td>
                 <td><input type='text' disabled defaultValue={country.id}/></td>
-                <td><input type='text' disabled defaultValue={country.countryName}/></td>
-                <td><input type='text' disabled defaultValue={country.capitalCity}/></td>
-                <td><input type='text' disabled defaultValue={country.population}/></td>
-                <td><input type='text' disabled defaultValue={country.imgURL}/></td>
-                <td><input type="button" value="Edit" className="btn btn-outline-secondary"/></td>
-                <td><input type="button" value="Save" className="btn btn-outline-success"/></td>
+                <td><input type='text' disabled={isDisabled} defaultValue={country.countryName}/></td>
+                <td><input type='text' disabled={isDisabled} defaultValue={country.capitalCity}/></td>
+                <td><input type='text' disabled={isDisabled} defaultValue={country.population}/></td>
+                <td><input type='text' disabled={isDisabled} defaultValue={country.imgURL}/></td>
+                <td><input type="button" onClick={() => setIsDisabled(false)} value="Edit" className="btn btn-outline-secondary"/></td>
+                <td><input type="button" onClick={() => setIsDisabled(true)} value="Save" className="btn btn-outline-success"/></td>
                 <td><input type="button" value="Delete" className="btn btn-outline-danger"/></td>
               </tr>
             )

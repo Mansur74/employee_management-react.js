@@ -44,7 +44,8 @@ export interface UserDetail {
   gender?: string,
   birthdate?: string,
   location?: string,
-  phoneNumber?: number
+  phoneNumber?: number,
+  description?: string,
   imgURL?: string
 }
 
@@ -80,9 +81,11 @@ export interface AuthResponse {
   accessToken: string,
   refreshToken: string
 }
+
 export interface RefreshToken {
   refreshToken: string
 }
+
 export interface AccessToken {
   accessToken: string
 }

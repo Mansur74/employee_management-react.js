@@ -29,10 +29,10 @@ export const getMe = async (accessToken: string) => {
 }
 
 export const logout = async () => {
-  const accessToken = localStorage.getItem("refreshToken");
+  const refreshToken = getRefreshToken();
   const result = await axios.delete<Result>("http://localhost:8080/api/authorization/logout", {
     headers: {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${refreshToken}`
     }
   });
   return result;

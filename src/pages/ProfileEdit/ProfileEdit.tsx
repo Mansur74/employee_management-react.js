@@ -5,6 +5,7 @@ import { getAccessToken, getMe, getRefreshToken } from '../../services/Authoriza
 import { updateMyUserDetail } from '../../services/UserDetailService';
 import Footer from '../../components/Footer/Footer';
 import { updateMe } from '../../services/UserService';
+import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
 
 type Props = {}
 
@@ -25,14 +26,15 @@ const ProfileEdit = (props: Props) => {
 		const data = new FormData(e.target as HTMLFormElement);
 		const userForm: User = {
 			firstName: data.get("firstName") as string,
-      lastName: data.get("lastName") as string,
-		} 
+			lastName: data.get("lastName") as string,
+		}
 
 		const userDetailForm: UserDetail = {
 			gender: data.get("gender") as string,
 			birthdate: data.get("birthDate") as string,
 			location: data.get("location") as string,
 			phoneNumber: parseInt(data.get("phoneNumber") as string) as number,
+			description: data.get("description") as string,
 			imgURL: data.get("imgURL") as string
 		}
 		const refreshToken: string = getRefreshToken()!;
@@ -62,8 +64,17 @@ const ProfileEdit = (props: Props) => {
 					<div className="col-xl-4">
 						<div className="card mb-4 mb-xl-0">
 							<div className="card-header">Profile Picture</div>
-							<div className="card-body text-center">
-								<img style={{ width: "300px", height: "300px", objectFit: "cover" }} className="rounded-circle" src={user?.userDetail?.imgURL} alt="" />
+							<div className="card-body text-center mx-auto" style={{ width: "300px", height: "300px" }}>
+
+								{
+									user?.userDetail?.imgURL
+										?
+
+										<img src={user?.userDetail?.imgURL ? user?.userDetail?.imgURL : "https://bootdey.com/img/Content/avatar/avatar1.png"} className="w-100 h-100 rounded-circle object-fit-cover mx-auto" alt="" />
+
+										: <CardSpinner />
+								}
+
 							</div>
 						</div>
 					</div>
@@ -95,22 +106,20 @@ const ProfileEdit = (props: Props) => {
 									<div className="row gx-3 mb-3">
 
 										<div className="col-md-6">
-											<label className="small mb-1" htmlFor="inputOrgName">Organization name</label>
-											<input className="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" />
+											<label className="small mb-1" htmlFor="gender">Gender</label>
+											<select className="form-select" name='gender' aria-label="Default select example" defaultValue={user?.userDetail?.gender}>
+												<option value="male">Male</option>
+												<option value="female">Female</option>
+											</select>
 										</div>
 
 										<div className="col-md-6">
-											<label className="small mb-1" htmlFor="inputLocation">Location</label>
-											<input className="form-control" name='location' id="inputLocation" type="text" placeholder="Enter your location" />
+											<label className="small mb-1" htmlFor="location">Location</label>
+											<select className="form-select" name='location' aria-label="Default select example" defaultValue={user?.userDetail?.location}>
+												<option value="TR">TR</option>
+												<option value="USA">USA</option>
+											</select>
 										</div>
-									</div>
-
-									<div className='mb-3'>
-										<label className="small mb-1" htmlFor="gender">Gender</label>
-										<select className="form-select" name='gender' aria-label="Default select example">
-											<option defaultValue="male" selected={user?.userDetail?.gender === "male" ? true : false} >Male</option>
-											<option defaultValue="female" selected={user?.userDetail?.gender === "female" ? true : false} >Female</option>
-										</select>
 									</div>
 
 									<div className="mb-3">
@@ -129,6 +138,11 @@ const ProfileEdit = (props: Props) => {
 											<label htmlFor="birthDate" className="form-label">Birth Date</label>
 											<input type="datetime-local" name='birthDate' className="form-control" id="birthDate" aria-describedby="birthDate" defaultValue={user?.userDetail?.birthdate} />
 										</div>
+									</div>
+
+									<div className="mb-3">
+										<label className="small mb-1" htmlFor="description">Description</label>
+										<textarea className="form-control" style={{ resize: "none" }} name='description' id="description" placeholder="Enter your description" defaultValue={user?.userDetail?.description} ></textarea>
 									</div>
 
 									<div className="mb-3">
