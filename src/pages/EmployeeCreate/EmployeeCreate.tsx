@@ -3,7 +3,7 @@ import { Employee, User } from '../../db';
 import { createMyEmployee } from '../../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 

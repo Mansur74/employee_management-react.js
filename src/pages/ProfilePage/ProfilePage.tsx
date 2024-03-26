@@ -4,9 +4,9 @@ import './ProfilePage.css'
 import { FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
-import { getAccessToken, getMe, getRefreshToken, logout } from '../../services/AuthorizationService';
+import { getAccessToken, getRefreshToken, logout } from '../../services/AuthorizationService';
 import Footer from '../../components/Footer/Footer';
-import { deleteMe } from '../../services/UserService';
+import { deleteMe, getMe } from '../../services/UserService';
 
 interface OuterContext {
   setIsSignIn: (data: boolean) => void
@@ -24,14 +24,6 @@ const ProfilePage = (props: Props) => {
     const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
     const user: User = (await getMe(accessToken)).data.data;
     setUser(user!);
-    try {
-      const refreshToken: string = getRefreshToken()!;
-      const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-      const result = await getMe(accessToken);
-      setUser(result.data.data);
-    } catch (error: any) {
-
-    }
   }
 
   const deleteUser = async () => {

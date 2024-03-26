@@ -19,15 +19,6 @@ export const getAccessToken = async (refreshToken: string) => {
 }
 
 
-export const getMe = async (accessToken: string) => {
-  const result = await axios.get<DataResult<User>>("http://localhost:8080/api/authorization/me", {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    }
-  });
-  return result;
-}
-
 export const logout = async () => {
   const refreshToken = getRefreshToken();
   const result = await axios.delete<Result>("http://localhost:8080/api/authorization/logout", {

@@ -5,7 +5,7 @@ import { getMyEmployees } from '../../services/EmployeeService'
 import { Employee } from "../../db"
 import { useLocation, useNavigate, useOutletContext } from 'react-router'
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner'
-import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService'
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService'
 
 type Props = {}
 

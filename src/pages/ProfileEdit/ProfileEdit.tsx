@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { User, UserDetail } from '../../db';
 import { useNavigate } from 'react-router';
-import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 import { updateMyUserDetail } from '../../services/UserDetailService';
 import Footer from '../../components/Footer/Footer';
-import { updateMe } from '../../services/UserService';
+import { getMe, updateMe } from '../../services/UserService';
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
 
 type Props = {}

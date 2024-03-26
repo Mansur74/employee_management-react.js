@@ -5,7 +5,7 @@ import { useNavigate, useOutletContext } from 'react-router'
 import { AuthRequest, AuthResponse, Result, User } from '../../db';
 import { useState } from 'react';
 import CardSpinner from '../../components/Spinner/CardSpinner/CardSpinner';
-import { getAccessToken, getMe, getRefreshToken, signIn } from '../../services/AuthorizationService';
+import { getAccessToken, getRefreshToken, signIn } from '../../services/AuthorizationService';
 import axios from 'axios';
 
 interface OuterContext {

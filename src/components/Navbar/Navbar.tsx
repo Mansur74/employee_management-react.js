@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User } from '../../db';
-import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 import { CiSettings, CiLogout } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
+import { getMe } from '../../services/UserService';
 
 interface Props {
   isSignIn: boolean,

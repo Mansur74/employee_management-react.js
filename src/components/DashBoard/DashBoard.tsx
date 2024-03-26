@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { Employee, User } from '../../db';
 import { getMyEmployeeById } from '../../services/EmployeeService';
 import CardSpinner from '../Spinner/CardSpinner/CardSpinner';
-import { getAccessToken, getMe, getRefreshToken } from '../../services/AuthorizationService';
+import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
 
 interface Props {
 
