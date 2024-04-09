@@ -22,9 +22,7 @@ const PassportCreate = (props: Props) => {
   }, []);
 
   const getCountries = async () => {
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getAllCountries(accessToken);
+    const result = await getAllCountries();
      setCountries(result.data.data);
   };
 
@@ -44,9 +42,7 @@ const PassportCreate = (props: Props) => {
       countries: validCountries
     }
     
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await createPassport(employeeId!, passport, accessToken);
+    await createPassport(parseInt(employeeId!), passport);
     navigate(`/employee/${employeeId}/passport`);
   }
 

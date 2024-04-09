@@ -6,8 +6,13 @@ type Props = {}
 const CardSpinner = (props: Props) => {
   return (
 
-    <div className="ldio-br9si551pem">
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div className="spinner-border text-primary" role="status" style={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)"
+    }}>
+      <span className="visually-hidden">Loading...</span>
     </div>
 
 

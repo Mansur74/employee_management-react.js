@@ -37,14 +37,8 @@ const SignUpPage = (props: Props) => {
     <>
       {
         isLoading ?
-          <div style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)"
-          }}>
-            <CardSpinner />
-          </div> :
+          <CardSpinner />
+          :
           <>
             <div className="form-signin w-100 m-auto">
               <form onSubmit={handleSignUp}>

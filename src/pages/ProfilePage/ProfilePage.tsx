@@ -20,16 +20,12 @@ const ProfilePage = (props: Props) => {
   const navigate = useNavigate();
 
   const getUser = async () => {
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const user: User = (await getMe(accessToken)).data.data;
+    const user: User = (await getMe()).data.data;
     setUser(user!);
   }
 
   const deleteUser = async () => {
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await deleteMe(accessToken);
+    await deleteMe();
     localStorage.removeItem("refreshToken");
     sessionStorage.removeItem("refreshToken");
     setIsSignIn(false);
@@ -107,14 +103,9 @@ const ProfilePage = (props: Props) => {
               </div>
             </div>
           </div> :
-          <div style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)"
-          }}>
-            <CardSpinner />
-          </div>
+       
+          <CardSpinner />
+         
       }
       <Footer />
     </>

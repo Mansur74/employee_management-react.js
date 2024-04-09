@@ -15,9 +15,7 @@ const ProfileEdit = (props: Props) => {
 	const navigate = useNavigate();
 
 	const getUser = async () => {
-		const refreshToken: string = getRefreshToken()!;
-		const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-		const result = await getMe(accessToken);
+		const result = await getMe();
 		setUser(result.data.data);
 	}
 
@@ -37,12 +35,9 @@ const ProfileEdit = (props: Props) => {
 			description: data.get("description") as string,
 			imgURL: data.get("imgURL") as string
 		}
-		const refreshToken: string = getRefreshToken()!;
-		let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-		let result = await updateMe(userForm, accessToken);
-
-		accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-		result = await updateMyUserDetail(user?.userDetail?.id!, userDetailForm, accessToken);
+	
+		await updateMe(userForm);
+		await updateMyUserDetail(user?.userDetail?.id!, userDetailForm);
 
 		navigate("/user/profile");
 

@@ -33,12 +33,10 @@ const EmployeesPage = (props: Props) => {
 
   const getEmployees = async () => {
     setIsLoading(true);
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    if (accessToken) {
+    if (getRefreshToken()) {
       try {
         const page = params.get("page") ? parseInt(params.get("page")!) : 0;
-        const result = await getMyEmployees(page, size, accessToken);
+        const result = await getMyEmployees(page, size);
         setPage(page);
         setEmployees(result.data.data.rows);
         setFiteredEmployees(result.data.data.rows);
@@ -151,14 +149,9 @@ const EmployeesPage = (props: Props) => {
           <Footer />
         </div>
       </> :
-      <div style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)"
-      }}>
-        <CardSpinner />
-      </div>
+
+      <CardSpinner />
+
   )
 }
 

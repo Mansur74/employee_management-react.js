@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { getAllCountries } from '../../services/CountryService';
 import { Country, Passport } from '../../db';
 import { useNavigate, useParams } from 'react-router';
-import { getPassportById, updatePassportById } from '../../services/PassportService';
+import { updatePassportById } from '../../services/PassportService';
 import { getMyEmployeeById } from '../../services/EmployeeService';
-import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
+import { getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -24,12 +24,8 @@ const PassportEdit = (props: Props) => {
   }, []);
 
   const getCountries = async () => {
-    const refreshToken: string = getRefreshToken()!;
-    let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const resultCountries = await getAllCountries(accessToken);
-
-    accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const resultEmployee = await getMyEmployeeById(employeeId!, accessToken!);
+    const resultCountries = await getAllCountries();
+    const resultEmployee = await getMyEmployeeById(parseInt(employeeId!));
     
     setCountries(resultCountries.data.data);
     setPassport(resultEmployee?.data.data.passport!);
@@ -52,9 +48,7 @@ const PassportEdit = (props: Props) => {
       countries: validCountries
     }
 
-    const refreshToken: string = getRefreshToken()!;
-    let accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await updatePassportById(passport?.id?.toString()!, updatedPassport, accessToken);
+    await updatePassportById(passport?.id!, updatedPassport);
     navigate(`/employee/${employeeId}/passport`);
     
   }

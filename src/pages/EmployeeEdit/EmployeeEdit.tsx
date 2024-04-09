@@ -1,9 +1,9 @@
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getMyEmployeeById, updateMyEmployeeById } from '../../services/EmployeeService';
 import { useParams } from 'react-router';
 import { Employee } from '../../db';
 import { useNavigate } from 'react-router-dom';
-import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
+import { getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -21,9 +21,7 @@ const EmployeeEdit = (props: Props) => {
   }, []);
 
   const getEmployee = async () => {
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getMyEmployeeById(employeeId!, accessToken);
+    const result = await getMyEmployeeById(parseInt(employeeId!));
     setEmployee(result?.data.data!);
   }
 
@@ -42,9 +40,7 @@ const EmployeeEdit = (props: Props) => {
       imgURL: data.get("imgURL") as string
     }
 
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await updateMyEmployeeById(employeeId!, body, accessToken);
+    await updateMyEmployeeById(parseInt(employeeId!), body);
     navigate(`/employee/${employeeId}`);
   }
 

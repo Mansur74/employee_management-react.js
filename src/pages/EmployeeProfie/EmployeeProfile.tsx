@@ -23,17 +23,13 @@ const EmployeeProfile = (props: Props) => {
   }, []);
 
   const getEmployees = async () => {
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getMyEmployeeById(employeeId!, accessToken);
+    const result = await getMyEmployeeById(parseInt(employeeId!));
     setEmployee(result?.data.data);
     setDate(new Date(result?.data.data.hiringDate!));
   }
 
   const deleteEmployee = async () =>{
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await deleteMyEmployeeById(employeeId!, accessToken); 
+    await deleteMyEmployeeById(parseInt(employeeId!)); 
     navigate("/employee");
   }
 

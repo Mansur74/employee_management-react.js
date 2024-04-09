@@ -6,10 +6,10 @@ import { faUserTie, faPassport } from '@fortawesome/free-solid-svg-icons';
 import { FaUserEdit, FaEdit } from 'react-icons/fa';
 import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
-import { Employee, User } from '../../db';
+import { Employee } from '../../db';
 import { getMyEmployeeById } from '../../services/EmployeeService';
 import CardSpinner from '../Spinner/CardSpinner/CardSpinner';
-import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
+import { getRefreshToken } from '../../services/AuthorizationService';
 
 interface Props {
 
@@ -31,9 +31,7 @@ const DashBoard = (props: Props) => {
 
   const getEmployee = async () => {
     setIsLoading(true);
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getMyEmployeeById(employeeId!, accessToken);
+    const result = await getMyEmployeeById(parseInt(employeeId!));
     setEmployee(result?.data.data);
     setIsLoading(false);
   }

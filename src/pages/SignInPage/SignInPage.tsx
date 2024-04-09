@@ -54,9 +54,7 @@ const SignInPage = (props: Props) => {
       {
         isLoading ?
 
-          <div style={{ height: 500 }}>
-            <CardSpinner />
-          </div>
+          <CardSpinner/>
           :
           <>
             <div className="form-signin w-100 m-auto">

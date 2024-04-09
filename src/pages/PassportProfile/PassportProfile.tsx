@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router';
 import { Passport } from '../../db';
 import CountryCard from '../../components/Cards/CountryCard/CountryCard';
 import { getMyEmployeeById } from '../../services/EmployeeService';
-import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
+import { getRefreshToken } from '../../services/AuthorizationService';
+import { deletePassport } from '../../services/PassportService';
 
 type Props = {}
 
@@ -23,11 +24,15 @@ const PassportProfile = (props: Props) => {
   }, []);
 
   const getPassport = async () => {
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getMyEmployeeById(employeeId!, accessToken);
+    const result = await getMyEmployeeById(parseInt(employeeId!));
     setPassport(result?.data.data.passport!);
     setDate(new Date(result?.data.data.passport?.validDate!));
+  }
+
+  const removePassport = async () =>{
+    await deletePassport(passport?.id!);
+    getPassport();
+    navigate(`/employee/${employeeId}`);
   }
 
   return (
@@ -46,6 +51,7 @@ const PassportProfile = (props: Props) => {
                     <h5 className="card-title">Passport Number: {passport?.passportNumber}</h5>
                     <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                     <p className="card-text"><small className="text-body-secondary">Valid Date: {date?.toLocaleDateString()}</small></p>
+                    <input value="Delete Value" onClick={removePassport} type="button" className="btn btn-outline-danger"/>
                   </div>
                 </div>
               </div>

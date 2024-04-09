@@ -3,7 +3,7 @@ import { Employee, User } from '../../db';
 import { createMyEmployee } from '../../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
-import { getAccessToken, getRefreshToken } from '../../services/AuthorizationService';
+import { getRefreshToken } from '../../services/AuthorizationService';
 
 type Props = {}
 
@@ -31,9 +31,7 @@ const CreateEmployeePage = (props: Props) => {
       imgURL: data.get("imgURL") as string
     }
 
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    await createMyEmployee(body, accessToken);
+    await createMyEmployee(body);
     navigate(`/employee?page=${0}`);
   }
 

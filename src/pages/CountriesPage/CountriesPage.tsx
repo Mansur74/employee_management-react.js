@@ -21,9 +21,7 @@ const CountriesPage = (props: Props) => {
   }, []);
   
   const getCountries = async () => {
-    const refreshToken: string = getRefreshToken()!;
-    const accessToken = (await getAccessToken(refreshToken)).data.data.accessToken;
-    const result = await getAllCountries(accessToken);
+    const result = await getAllCountries();
     typeof result !== "string" ? setCountries(result.data.data) : setServerError(result);
   }
 
